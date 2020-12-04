@@ -10,8 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import static javafxapplication1.CPU.ByteRAM.stringToByte;
-//import static javafxapplication1.CPU.ByteRAM.byteToString;
 
 /**
  *

@@ -5,9 +5,6 @@
  */
 package javafxapplication1.CPU;
 
-import javafx.scene.control.Label;
-import javafx.scene.shape.Rectangle;
-
 /**
  *
  * @author Jorge
@@ -41,19 +38,27 @@ public class CPU {
         this.ram = ram;
     }
 
-    public void swapRegistersBase(Boolean isBinaryOn) {
-        registerA.swapBase(isBinaryOn);
-        registerB.swapBase(isBinaryOn);
-        registerC.swapBase(isBinaryOn);
-        registerD.swapBase(isBinaryOn);
+    public void swapRegistersBase() {
+        registerA.swapBase();
+        registerB.swapBase();
+        registerC.swapBase();
+        registerD.swapBase();
     }
     
-    public void swapAddressRegisterBase(Boolean isBinaryOn){
-        this.controlUnit.swapAddressRegister(isBinaryOn);
+    public void updateGUI(){
+        registerA.update();
+        registerB.update();
+        registerC.update();
+        registerD.update();
+        this.controlUnit.updateGUI();
     }
     
-    public void swapInstructionRegisterBase(Boolean isBinaryOn){
-        this.controlUnit.swapInstructionRegister(isBinaryOn);
+    public void swapAddressRegisterBase(){
+        this.controlUnit.swapAddressRegisterBase();
+    }
+    
+    public void swapInstructionRegisterBase(){
+        this.controlUnit.swapInstructionRegisterBase();
     }
 
     public void setRegisterA(CpuRegister registerA) {
@@ -80,5 +85,16 @@ public class CPU {
         this.controlUnit.setAddressRegister(addressRegister);
     }
     
-
+    public void fetch( ){
+        //this.controlUnit;
+    }
+    
+    public void decode( ){
+        
+    }
+    
+    public void excecute( ){
+        
+    }
+    
 }

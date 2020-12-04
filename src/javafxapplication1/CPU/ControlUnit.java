@@ -57,16 +57,12 @@ public class ControlUnit {
         this.N_flag = false;
     }
     
-    public void swapAddressRegister(Boolean isBinaryOn){
-        this.addressRegister.swapBase(isBinaryOn);
+    public void swapAddressRegisterBase(){
+        this.addressRegister.swapBase();
     }
     
-    public void swapInstructionRegister(Boolean isBinaryOn){
-        if(!isBinaryOn){
-            this.instructionRegister.swapBase(isBinaryOn);
-        }else{
-            this.instructionRegister.showInText();
-        }
+    public void swapInstructionRegisterBase(){
+        this.instructionRegister.swapInstBase();
     }
     
     public void setInstructionRegister(CpuRegister instructionRegister){
@@ -75,6 +71,11 @@ public class ControlUnit {
     
     public void setAddressRegister(CpuRegister addressRegister){
         this.addressRegister = addressRegister;
+    }
+    
+    public void updateGUI(){
+        this.addressRegister.update();
+        this.instructionRegister.update();
     }
     
     public static Instruction getOpcode(Register reg){
@@ -121,59 +122,88 @@ public class ControlUnit {
     public static String getInstructionAsString(NumberingSystem ns, Register reg){
         Instruction opcode = getOpcode(reg);
         String instruction = opcode.toString();
-        System.out.println(opcode);
         if(instruction.equals("ADD") || instruction.equals("SUB")){
-            System.out.println("true");
             String st = reg.getBinaryValueAsString();
             String op1 = "" + st.charAt(4) +  st.charAt(5);
             String op2 = "" + st.charAt(6) +  st.charAt(7);
             if(ns == NumberingSystem.OPCbin){
-                instruction = instruction + "_" + op1 + "-" + op2;
+                instruction = instruction + " " + op1 + " " + op2;
             }else if(ns == NumberingSystem.OPCdec){
-                if(op1.equals("00")){
-                    instruction = instruction + "_" + "A";
-                    if(op2.equals("00")){
-                        instruction = instruction + "-" + "A";
-                    }else if(op2.equals("01")){
-                        instruction = instruction + "-" + "B";
-                    }else if(op2.equals("10")){
-                        instruction = instruction + "-" + "C";
-                    }else if(op2.equals("11")){
-                        instruction = instruction + "-" + "D";
-                    }
-                }else if(op1.equals("01")){
-                    instruction = instruction + "_" + "B";
-                    if(op2.equals("00")){
-                        instruction = instruction + "-" + "A";
-                    }else if(op2.equals("01")){
-                        instruction = instruction + "-" + "B";
-                    }else if(op2.equals("10")){
-                        instruction = instruction + "-" + "C";
-                    }else if(op2.equals("11")){
-                        instruction = instruction + "-" + "D";
-                    }
-                }else if(op1.equals("10")){
-                    instruction = instruction + "_" + "C";
-                    if(op2.equals("00")){
-                        instruction = instruction + "-" + "A";
-                    }else if(op2.equals("01")){
-                        instruction = instruction + "-" + "B";
-                    }else if(op2.equals("10")){
-                        instruction = instruction + "-" + "C";
-                    }else if(op2.equals("11")){
-                        instruction = instruction + "-" + "D";
-                    }
-                }else if(op1.equals("11")){
-                    instruction = instruction + "_" + "D";
-                    if(op2.equals("00")){
-                        instruction = instruction + "-" + "A";
-                    }else if(op2.equals("01")){
-                        instruction = instruction + "-" + "B";
-                    }else if(op2.equals("10")){
-                        instruction = instruction + "-" + "C";
-                    }else if(op2.equals("11")){
-                        instruction = instruction + "-" + "D";
-                    }
+                switch (op1) {
+                    case "00":
+                        instruction = instruction + " " + "A";
+                        switch (op2) {
+                            case "00":
+                                instruction = instruction + " " + "A";
+                                break;
+                            case "01":
+                                instruction = instruction + " " + "B";
+                                break;
+                            case "10":
+                                instruction = instruction + " " + "C";
+                                break;
+                            case "11":
+                                instruction = instruction + " " + "D";
+                                break;
+                            default:
+                                break;
+                        }   break;
+                    case "01":
+                        instruction = instruction + " " + "B";
+                        switch (op2) {
+                            case "00":
+                                instruction = instruction + " " + "A";
+                                break;
+                            case "01":
+                                instruction = instruction + " " + "B";
+                                break;
+                            case "10":
+                                instruction = instruction + " " + "C";
+                                break;
+                            case "11":
+                                instruction = instruction + " " + "D";
+                                break;
+                            default:
+                                break;
+                        }   break;
+                    case "10":
+                        instruction = instruction + " " + "C";
+                        switch (op2) {
+                            case "00":
+                                instruction = instruction + " " + "A";
+                                break;
+                            case "01":
+                                instruction = instruction + " " + "B";
+                                break;
+                            case "10":
+                                instruction = instruction + " " + "C";
+                                break;
+                            case "11":
+                                instruction = instruction + " " + "D";
+                                break;
+                            default:
+                                break;
+                        }   break;
+                    case "11":
+                        instruction = instruction + " " + "D";
+                        switch (op2) {
+                            case "00":
+                                instruction = instruction + " " + "A";
+                                break;
+                            case "01":
+                                instruction = instruction + " " + "B";
+                                break;
+                            case "10":
+                                instruction = instruction + " " + "C";
+                                break;
+                            case "11":
+                                instruction = instruction + " " + "D";
+                                break;
+                            default:
+                                break;
+                        }   break;
+                    default:
+                        break;
                 }
             } 
         }else{
@@ -183,40 +213,59 @@ public class ControlUnit {
                 String st = reg.getBinaryValueAsString();
                 String op = "" + st.charAt(4) +  st.charAt(5) +  st.charAt(6) +  st.charAt(7) ;
                 if(ns == NumberingSystem.OPCbin){
-                    instruction = instruction + "_" + op;
+                    instruction = instruction + " " + op;
                 }else if(ns == NumberingSystem.OPCdec){
-                    if(op.equals("0000")){
-                        instruction = instruction + "_" + "0";
-                    }else if(op.equals("0001")){
-                        instruction = instruction + "_" + "1";
-                    }else if(op.equals("0010")){
-                        instruction = instruction + "_" + "2";
-                    }else if(op.equals("0011")){
-                        instruction = instruction + "_" + "3";
-                    }else if(op.equals("0100")){
-                        instruction = instruction + "_" + "4";
-                    }else if(op.equals("0101")){
-                        instruction = instruction + "_" + "5";
-                    }else if(op.equals("0110")){
-                        instruction = instruction + "_" + "6";
-                    }else if(op.equals("0111")){
-                        instruction = instruction + "_" + "7";
-                    }else if(op.equals("1000")){
-                        instruction = instruction + "_" + "8";
-                    }else if(op.equals("1001")){
-                        instruction = instruction + "_" + "9";
-                    }else if(op.equals("1010")){
-                        instruction = instruction + "_" + "10";
-                    }else if(op.equals("1011")){
-                        instruction = instruction + "_" + "11";
-                    }else if(op.equals("1100")){
-                        instruction = instruction + "_" + "12";
-                    }else if(op.equals("1101")){
-                        instruction = instruction + "_" + "13";
-                    }else if(op.equals("1110")){
-                        instruction = instruction + "_" + "14";
-                    }else if(op.equals("1111")){
-                        instruction = instruction + "_" + "15";
+                    switch (op) {
+                        case "0000":
+                            instruction = instruction + " " + "0";
+                            break;
+                        case "0001":
+                            instruction = instruction + " " + "1";
+                            break;
+                        case "0010":
+                            instruction = instruction + " " + "2";
+                            break;
+                        case "0011":
+                            instruction = instruction + " " + "3";
+                            break;
+                        case "0100":
+                            instruction = instruction + " " + "4";
+                            break;
+                        case "0101":
+                            instruction = instruction + " " + "5";
+                            break;
+                        case "0110":
+                            instruction = instruction + " " + "6";
+                            break;
+                        case "0111":
+                            instruction = instruction + " " + "7";
+                            break;
+                        case "1000":
+                            instruction = instruction + " " + "8";
+                            break;
+                        case "1001":
+                            instruction = instruction + " " + "9";
+                            break;
+                        case "1010":
+                            instruction = instruction + " " + "10";
+                            break;
+                        case "1011":
+                            instruction = instruction + " " + "11";
+                            break;
+                        case "1100":
+                            instruction = instruction + " " + "12";
+                            break;
+                        case "1101":
+                            instruction = instruction + " " + "13";
+                            break;
+                        case "1110":
+                            instruction = instruction + " " + "14";
+                            break;
+                        case "1111":
+                            instruction = instruction + " " + "15";
+                            break;
+                        default:
+                            break;
                     }
                 }
             }

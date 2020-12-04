@@ -382,20 +382,20 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void swapRegisters(ActionEvent event){
-        cpu.swapRegistersBase(cpuRegisters_isBinaryOn);
-        this.cpuRegisters_isBinaryOn = !this.cpuRegisters_isBinaryOn;
+        cpu.swapRegistersBase();
+        cpu.updateGUI();
     }
     
     @FXML
     private void swapAddressRegister(ActionEvent event){
-        cpu.swapAddressRegisterBase(this.addresRegister_isBinaryOn);
-        this.addresRegister_isBinaryOn = !this.addresRegister_isBinaryOn;
+        cpu.swapAddressRegisterBase();
+        cpu.updateGUI();
     }
     
     @FXML
     private void swapInstructionRegister(ActionEvent event){
-        cpu.swapInstructionRegisterBase(this.instructionRegister_isBinaryOn);
-        this.instructionRegister_isBinaryOn = !this.instructionRegister_isBinaryOn;
+        cpu.swapInstructionRegisterBase();
+        cpu.updateGUI();
     }
     
     @FXML

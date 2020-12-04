@@ -7,6 +7,7 @@ package javafxapplication1.CPU;
 
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
+import static javafxapplication1.CPU.ControlUnit.getInstructionAsString;
 import static javafxapplication1.CPU.ControlUnit.getOpcode;
 
 /**
@@ -15,7 +16,8 @@ import static javafxapplication1.CPU.ControlUnit.getOpcode;
  */
 public class CpuRegister extends Register{
     private Rectangle rectangle;
-    private Label label;
+    private Label contentLabel;
+    private NumberingSystem content_numberingSystem;
     
     
     public CpuRegister(){
@@ -24,8 +26,9 @@ public class CpuRegister extends Register{
     
     //Setea los componentes que representan al registro en la GUI
     public void setGUI(Label label, Rectangle rectangle){
-        this.label = label;
+        this.contentLabel = label;
         this.rectangle = rectangle;
+        this.content_numberingSystem = NumberingSystem.BIN;
     }
     
     //Resalta el registro instanciado (THIS) en la GUI 
@@ -37,12 +40,40 @@ public class CpuRegister extends Register{
         }
     }
     
+    public void swapBase(){
+        if(this.content_numberingSystem == NumberingSystem.BIN){
+            this.content_numberingSystem = NumberingSystem.DEC;
+        }else if(this.content_numberingSystem == NumberingSystem.DEC){
+            this.content_numberingSystem = NumberingSystem.BIN;
+        }
+    }
+    
+    public void swapInstBase(){
+        if(null != this.content_numberingSystem)switch (this.content_numberingSystem) {
+            case BIN:
+                this.content_numberingSystem = NumberingSystem.OPCbin;
+                break;
+            case OPCbin:
+                this.content_numberingSystem = NumberingSystem.OPCdec;
+                break;
+            case OPCdec:
+                this.content_numberingSystem = NumberingSystem.BIN;
+                break;
+            default:
+                break;
+        }
+    }
+    
     //Intercambia el formato del contenido del registro en la GUI
-    public void swapBase(Boolean isBinary){
-        if(isBinary){
-            this.label.setText(this.getValue().toString());
-        }else{
-            this.label.setText(this.getBinaryValueAsString());
+    public void update(){
+        if(this.content_numberingSystem == NumberingSystem.BIN){
+            this.contentLabel.setText(this.getBinaryValueAsString());
+        }else if(this.content_numberingSystem == NumberingSystem.OPCbin){
+            this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
+        }else if(this.content_numberingSystem == NumberingSystem.OPCdec){
+            this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
+        }else if(this.content_numberingSystem == NumberingSystem.DEC){
+            this.contentLabel.setText(this.getIntegerValueAsString());
         }
     }
 
@@ -52,7 +83,7 @@ public class CpuRegister extends Register{
     }
     
     public void personalizeLabel(String value){
-        this.label.setText(value);
+        this.contentLabel.setText(value);
     }
     public void resetLabel(){
     
