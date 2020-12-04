@@ -295,10 +295,90 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void swapRamContentBase(){
-        ram.swapRamContentBase();
-        ram.update();
+    private void swapRamContentBase_0(){
+        ram.getByAddress(0).swapContentBase();
+        ram.getByAddress(0).update();
     }
+    @FXML
+    private void swapRamContentBase_1(){
+        ram.getByAddress(1).swapContentBase();
+        ram.getByAddress(1).update();
+    }
+    @FXML
+    private void swapRamContentBase_2(){
+        ram.getByAddress(2).swapContentBase();
+        ram.getByAddress(2).update();
+    }
+    @FXML
+    private void swapRamContentBase_3(){
+        ram.getByAddress(3).swapContentBase();
+        ram.getByAddress(3).update();
+    }
+    @FXML
+    private void swapRamContentBase_4(){
+        ram.getByAddress(4).swapContentBase();
+        ram.getByAddress(4).update();
+    }
+    @FXML
+    private void swapRamContentBase_5(){
+        ram.getByAddress(5).swapContentBase();
+        ram.getByAddress(5).update();
+    }
+    @FXML
+    private void swapRamContentBase_6(){
+        ram.getByAddress(6).swapContentBase();
+        ram.getByAddress(6).update();
+    }
+    @FXML
+    private void swapRamContentBase_7(){
+        ram.getByAddress(7).swapContentBase();
+        ram.getByAddress(7).update();
+    }
+    @FXML
+    private void swapRamContentBase_8(){
+        ram.getByAddress(8).swapContentBase();
+        ram.getByAddress(8).update();
+    }
+    @FXML
+    private void swapRamContentBase_9(){
+        ram.getByAddress(9).swapContentBase();
+        ram.getByAddress(9).update();
+    }
+    @FXML
+    private void swapRamContentBase_10(){
+        ram.getByAddress(10).swapContentBase();
+        ram.getByAddress(10).update();
+    }
+    @FXML
+    private void swapRamContentBase_11(){
+        ram.getByAddress(11).swapContentBase();
+        ram.getByAddress(11).update();
+    }
+    @FXML
+    private void swapRamContentBase_12(){
+        ram.getByAddress(12).swapContentBase();
+        ram.getByAddress(12).update();
+    }
+    @FXML
+    private void swapRamContentBase_13(){
+        ram.getByAddress(13).swapContentBase();
+        ram.getByAddress(13).update();
+    }
+    @FXML
+    private void swapRamContentBase_14(){
+        ram.getByAddress(14).swapContentBase();
+        ram.getByAddress(14).update();
+    }
+    @FXML
+    private void swapRamContentBase_15(){
+        ram.getByAddress(15).swapContentBase();
+        ram.getByAddress(15).update();
+    }
+    
+    
+    
+    
+    
     
     @FXML
     private void swapRegisters(ActionEvent event){
@@ -390,12 +470,7 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception ex){
             return false;
         }
-    }
-    
-    
-    
-
-    
+    }  
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -358,7 +358,6 @@
       <Line fx:id="data5_line" endX="444.0" endY="227.0" scaleY="6.0" startX="218.0" startY="227.0" stroke="#505050" />
       <Line fx:id="data1_line" endX="1252.0" endY="227.0" scaleY="6.0" startX="1050.0" startY="227.0" stroke="#505050" />
       <Button fx:id="ramAddress_btn" layoutX="1272.0" layoutY="864.0" mnemonicParsing="false" onAction="#swapRamAddressBase" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: transparent;" text="(BIN)" />
-      <Button fx:id="ramData_btn" layoutX="1361.0" layoutY="864.0" mnemonicParsing="false" onAction="#swapRamContentBase" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="regA_btn" layoutX="124.0" layoutY="311.0" mnemonicParsing="false" onAction="#swapRegisters" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="regB_Btn" layoutX="347.0" layoutY="311.0" mnemonicParsing="false" onAction="#swapRegisters" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="regC_Btn" layoutX="721.0" layoutY="311.0" mnemonicParsing="false" onAction="#swapRegisters" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
@@ -368,6 +367,22 @@
       <Button layoutX="488.0" layoutY="29.0" mnemonicParsing="false" onAction="#startCPU" text="Button" />
       <Button layoutX="734.0" layoutY="29.0" mnemonicParsing="false" text="Next step" />
       <Button fx:id="uploadFile_btn" layoutX="974.0" layoutY="29.0" mnemonicParsing="false" onAction="#displayFilePicker" text="Cargar Archivo" />
+      <Button fx:id="ramBtn0" layoutX="1571.0" layoutY="200.0" mnemonicParsing="false" onAction="#swapRamContentBase_0" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn1" layoutX="1571.0" layoutY="241.0" mnemonicParsing="false" onAction="#swapRamContentBase_1" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn2" layoutX="1571.0" layoutY="282.0" mnemonicParsing="false" onAction="#swapRamContentBase_2" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn3" layoutX="1571.0" layoutY="321.0" mnemonicParsing="false" onAction="#swapRamContentBase_3" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn4" layoutX="1571.0" layoutY="364.0" mnemonicParsing="false" onAction="#swapRamContentBase_4" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn5" layoutX="1571.0" layoutY="405.0" mnemonicParsing="false" onAction="#swapRamContentBase_5" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn6" layoutX="1571.0" layoutY="446.0" mnemonicParsing="false" onAction="#swapRamContentBase_6" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn7" layoutX="1571.0" layoutY="486.0" mnemonicParsing="false" onAction="#swapRamContentBase_7" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn8" layoutX="1571.0" layoutY="528.0" mnemonicParsing="false" onAction="#swapRamContentBase_8" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn9" layoutX="1571.0" layoutY="568.0" mnemonicParsing="false" onAction="#swapRamContentBase_9" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn10" layoutX="1571.0" layoutY="609.0" mnemonicParsing="false" onAction="#swapRamContentBase_10" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn11" layoutX="1571.0" layoutY="650.0" mnemonicParsing="false" onAction="#swapRamContentBase_11" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn12" layoutX="1571.0" layoutY="691.0" mnemonicParsing="false" onAction="#swapRamContentBase_12" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn13" layoutX="1571.0" layoutY="732.0" mnemonicParsing="false" onAction="#swapRamContentBase_13" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn14" layoutX="1571.0" layoutY="773.0" mnemonicParsing="false" onAction="#swapRamContentBase_14" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
+      <Button fx:id="ramBtn15" layoutX="1571.0" layoutY="814.0" mnemonicParsing="false" onAction="#swapRamContentBase_15" prefHeight="30.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="(BIN)" />
       
    </children>
 </AnchorPane>

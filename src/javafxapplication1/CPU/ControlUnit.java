@@ -77,7 +77,6 @@ public class ControlUnit {
         this.addressRegister = addressRegister;
     }
     
-    
     public static Instruction getOpcode(Register reg){
         String st = reg.getBinaryValueAsString();
         String opcodeSt = "" + st.charAt(0) +  st.charAt(1) + st.charAt(2) + st.charAt(3);
@@ -122,7 +121,9 @@ public class ControlUnit {
     public static String getInstructionAsString(NumberingSystem ns, Register reg){
         Instruction opcode = getOpcode(reg);
         String instruction = opcode.toString();
-        if(opcode == Instruction.ADD && opcode == Instruction.SUB){
+        System.out.println(opcode);
+        if(instruction.equals("ADD") || instruction.equals("SUB")){
+            System.out.println("true");
             String st = reg.getBinaryValueAsString();
             String op1 = "" + st.charAt(4) +  st.charAt(5);
             String op2 = "" + st.charAt(6) +  st.charAt(7);
@@ -176,7 +177,7 @@ public class ControlUnit {
                 }
             } 
         }else{
-            if(opcode == Instruction.HALT){
+            if(instruction.equals("HALT")){
                 return instruction;
             }else{
                 String st = reg.getBinaryValueAsString();
