@@ -40,15 +40,16 @@ public class CpuRegister extends Register{
         }
     }
     
-    public void swapBase(){
+    public NumberingSystem swapBase(){
         if(this.content_numberingSystem == NumberingSystem.BIN){
             this.content_numberingSystem = NumberingSystem.DEC;
         }else if(this.content_numberingSystem == NumberingSystem.DEC){
             this.content_numberingSystem = NumberingSystem.BIN;
         }
+        return this.content_numberingSystem;
     }
     
-    public void swapInstBase(){
+    public NumberingSystem swapInstBase(){
         if(null != this.content_numberingSystem)switch (this.content_numberingSystem) {
             case BIN:
                 this.content_numberingSystem = NumberingSystem.OPCbin;
@@ -62,18 +63,26 @@ public class CpuRegister extends Register{
             default:
                 break;
         }
+        return this.content_numberingSystem;
     }
     
     //Intercambia el formato del contenido del registro en la GUI
     public void update(){
-        if(this.content_numberingSystem == NumberingSystem.BIN){
-            this.contentLabel.setText(this.getBinaryValueAsString());
-        }else if(this.content_numberingSystem == NumberingSystem.OPCbin){
-            this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
-        }else if(this.content_numberingSystem == NumberingSystem.OPCdec){
-            this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
-        }else if(this.content_numberingSystem == NumberingSystem.DEC){
-            this.contentLabel.setText(this.getIntegerValueAsString());
+        if(null !=  this.content_numberingSystem)switch (this.content_numberingSystem) {
+            case BIN:
+                this.contentLabel.setText(this.getBinaryValueAsString());
+                break;
+            case OPCbin:
+                this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
+                break;
+            case OPCdec:
+                this.contentLabel.setText(getInstructionAsString(this.content_numberingSystem, this));
+                break;
+            case DEC:
+                this.contentLabel.setText(this.getIntegerValueAsString());
+                break;
+            default:
+                break;
         }
     }
 

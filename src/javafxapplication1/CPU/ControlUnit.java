@@ -57,12 +57,12 @@ public class ControlUnit {
         this.N_flag = false;
     }
     
-    public void swapAddressRegisterBase(){
-        this.addressRegister.swapBase();
+    public NumberingSystem swapAddressRegisterBase(){
+        return this.addressRegister.swapBase();
     }
     
-    public void swapInstructionRegisterBase(){
-        this.instructionRegister.swapInstBase();
+    public NumberingSystem swapInstructionRegisterBase(){
+        return this.instructionRegister.swapInstBase();
     }
     
     public void setInstructionRegister(CpuRegister instructionRegister){
@@ -273,5 +273,9 @@ public class ControlUnit {
         return instruction;
     }
    
+    
+    public void fetch(){
+        this.instructionRegister.setHighlight(true);
+    }
     
 }

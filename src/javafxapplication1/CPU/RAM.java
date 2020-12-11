@@ -20,19 +20,14 @@ public class RAM {
         for(int i = 0; i < 16; i++){
             this.registers.add(new RamRegister(i));
         }
-    }
+    }  
     
-    
-    public void swapRamAddressBase(){
+    public NumberingSystem swapRamAddressesBase(){
+        NumberingSystem toReturn = null;
         for(int i = 0; i < registers.size(); i ++){
-            registers.get(i).swapAddressBase();
+            toReturn  = registers.get(i).swapAddressBase();
         }
-    }
-    
-    public void swapRamContentBase(){
-        for(int i = 0; i < registers.size(); i ++){
-            registers.get(i).swapContentBase();
-        }
+        return toReturn;
     }
     
     public RamRegister getByAddress(int i){

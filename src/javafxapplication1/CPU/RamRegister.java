@@ -42,15 +42,16 @@ public class RamRegister extends Register{
 
     }
     
-    public void swapAddressBase(){
+    public NumberingSystem swapAddressBase(){
         if(this.address_numberingSystem == NumberingSystem.BIN){
             this.address_numberingSystem = NumberingSystem.DEC;
         }else if(this.address_numberingSystem == NumberingSystem.DEC){
             this.address_numberingSystem = NumberingSystem.BIN;
-        }                 
+        }
+        return this.address_numberingSystem;
     }
     
-    public void swapContentBase(){
+    public NumberingSystem swapContentBase(){
         if(null != this.content_numberingSystem)switch (this.content_numberingSystem) {
             case BIN:
                 this.content_numberingSystem = NumberingSystem.OPCbin;
@@ -67,6 +68,7 @@ public class RamRegister extends Register{
             default:
                 break;
         }
+        return this.content_numberingSystem;
     }
     
     public void update(){

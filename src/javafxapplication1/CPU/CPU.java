@@ -5,6 +5,9 @@
  */
 package javafxapplication1.CPU;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jorge
@@ -14,6 +17,7 @@ public class CPU {
     private ALU alu;
     private ControlUnit controlUnit;
     private RAM ram;
+    private GUI_BusAnimator animator;
 
     private CpuRegister registerA;
     private CpuRegister registerB;
@@ -37,12 +41,17 @@ public class CPU {
     public void setRAM(RAM ram) {
         this.ram = ram;
     }
+    
+    public void setAnimator(GUI_BusAnimator animator){
+        this.animator = animator;
+    }
 
-    public void swapRegistersBase() {
+    public NumberingSystem swapRegistersBase() {
         registerA.swapBase();
         registerB.swapBase();
         registerC.swapBase();
-        registerD.swapBase();
+        return registerD.swapBase();
+        
     }
     
     public void updateGUI(){
@@ -53,12 +62,12 @@ public class CPU {
         this.controlUnit.updateGUI();
     }
     
-    public void swapAddressRegisterBase(){
-        this.controlUnit.swapAddressRegisterBase();
+    public NumberingSystem swapAddressRegisterBase(){
+        return this.controlUnit.swapAddressRegisterBase();
     }
     
-    public void swapInstructionRegisterBase(){
-        this.controlUnit.swapInstructionRegisterBase();
+    public NumberingSystem swapInstructionRegisterBase(){
+        return this.controlUnit.swapInstructionRegisterBase();
     }
 
     public void setRegisterA(CpuRegister registerA) {
@@ -85,8 +94,16 @@ public class CPU {
         this.controlUnit.setAddressRegister(addressRegister);
     }
     
+    
     public void fetch( ){
-        //this.controlUnit;
+         this.animator.addressInput_On();
+         
+         
+         this.animator.readEnable_On();
+         
+         this.animator.ramToControlUnit();
+         
+         this.controlUnit.fetch();
     }
     
     public void decode( ){
