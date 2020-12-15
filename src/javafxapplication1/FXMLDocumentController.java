@@ -319,6 +319,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Line ALUout3_line;
     
+    @FXML
+    private Rectangle oflag_rec;
+    @FXML
+    private Rectangle zflag_rec;
+    @FXML
+    private Rectangle nflag_rec;
+    
     
 
     //@FXML
@@ -336,6 +343,8 @@ public class FXMLDocumentController implements Initializable {
         cpu.setAddressRegister(addressRegister);
         CpuRegister instructionRegister = new CpuRegister(); instructionRegister.setGUI(instructionReg_lbl, instructionReg_rec);
         cpu.setInstructionRegister(instructionRegister);
+        
+        cpu.setFlagsGUI(oflag_rec, zflag_rec, nflag_rec);
         
         this.ram.getByAddress(0).setRamRegisterGUI(addr0Num_lbl, addr0_lbl, addr0_rec);
         this.ram.getByAddress(1).setRamRegisterGUI(addr1Num_lbl, addr1_lbl, addr1_rec);
@@ -608,11 +617,6 @@ public class FXMLDocumentController implements Initializable {
         this.cpu.setAnimator(this.bs_animator);
         Thread th = new Thread(this.cpu);
         th.start();
-    }
-    
-    @FXML
-    private void resetBus(ActionEvent event){
-        this.cpu.resetBus();
     }
     
     @FXML

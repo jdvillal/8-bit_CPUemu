@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package javafxapplication1.CPU;
+
+import javafx.scene.shape.Rectangle;
+
 /**
  *
  * @author Jorge
@@ -24,10 +27,20 @@ public class ControlUnit {
     private Boolean Z_flag;
     private Boolean N_flag;
     
+    private Rectangle oflag_rec;
+    private Rectangle zflag_rec;
+    private Rectangle nflag_rec;
+    
     public ControlUnit(){
         this.O_flag = false;
         this.Z_flag = false;
         this.N_flag = false;  
+    }
+    
+    public void setFlagsGUI(Rectangle oflag_rec, Rectangle zflag_rec, Rectangle nflag_rec){
+        this.oflag_rec = oflag_rec;
+        this.zflag_rec = zflag_rec;
+        this.nflag_rec = nflag_rec;
     }
     
     public void setALU(ALU alu){
@@ -55,6 +68,28 @@ public class ControlUnit {
         this.O_flag = false;
         this.Z_flag = false;
         this.N_flag = false;
+    }
+    
+    public boolean isFlagOn(){
+        return this.O_flag || this.Z_flag || this.N_flag;
+    }
+    
+    public void updateFlagsGUI(){
+        if(this.O_flag){
+            this.oflag_rec.setStyle("-fx-fill: #ff9f00;");
+        }else{
+            this.oflag_rec.setStyle("-fx-fill: #96a6b5;");
+        }
+        if(this.Z_flag){
+            this.zflag_rec.setStyle("-fx-fill: #ff9f00;");
+        }else{
+            this.zflag_rec.setStyle("-fx-fill: #96a6b5;");
+        }
+        if(this.N_flag){
+            this.nflag_rec.setStyle("-fx-fill: #ff9f00;");
+        }else{
+            this.nflag_rec.setStyle("-fx-fill: #96a6b5;");
+        }
     }
     
     public NumberingSystem swapAddressRegisterBase(){
@@ -117,6 +152,47 @@ public class ControlUnit {
                 default:
                     return null;
         }
+    }
+    
+    public static int stringBinaryToInt(String st){
+        System.out.println(st);
+        switch (st) {
+            case "0000":
+                return 0;
+            case "0001":
+                return 1;
+            case "0010":
+                return 2;
+            case "0011":
+                return 3;
+            case "0100":
+                return 4;
+            case "0101":
+                return 5;
+            case "0110":
+                return 6;
+            case "0111":
+                return 7;
+            case "1000":
+                return 8;
+            case "1001":
+                return 9;
+            case "1010":
+                return 10;
+            case "1011":
+                return 11;
+            case "1100":
+                return 12;
+            case "1101":
+                return 13;
+            case "1110":
+                return 14;
+            case "1111":
+                return 15;
+            default:
+                return 0;
+        }
+    
     }
     
     public static String getInstructionAsString(NumberingSystem ns, Register reg){

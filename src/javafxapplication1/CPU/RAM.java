@@ -38,7 +38,7 @@ public class RAM {
     public void setByAddress(int i, String st){
         this.registers.get(i).setValue(st);
     }
-    
+    /*
     public void update(){
         Platform.runLater(new Runnable(){
             @Override
@@ -46,12 +46,17 @@ public class RAM {
                 updateGUI();
             }
         });
-    }
+    }*/
     
-    public void updateGUI(){
+    public void update(){
         for(int i = 0; i < registers.size() ; i ++){
             registers.get(i).update();
         }
+    }
+    public void resetHighlight(){
+        this.registers.forEach((rr) -> {
+            rr.setHighlight(false);
+        });
     }
     
     public void setHighlight(int address, boolean bool){

@@ -9,7 +9,7 @@ package javafxapplication1.CPU;
  *
  * @author Jorge
  */
-public abstract class Register {
+public  class Register {
     
     private Byte value;
     
@@ -17,8 +17,8 @@ public abstract class Register {
         this.value = stringToByte("00000000");
     }
     
-    public Register(String v){
-        this.value = stringToByte(v);
+    public Register(String value){
+        this.value = stringToByte(value);
     }
     
     public boolean setValue(String newValue){

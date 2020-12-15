@@ -28,7 +28,7 @@ public class LineAnimator extends Thread{
             if(!setReverse){
                 for(Line l : this.bus){
                     try{
-                        sleep(500/this.bus.size());
+                        sleep(CPU.delay/this.bus.size());
                         l.setStyle("-fx-stroke: ff9f00;");
                     }catch(Exception ex){
                     }
@@ -36,7 +36,7 @@ public class LineAnimator extends Thread{
             }else{
                 for(int i = this.bus.size()-1; i >= 0; i--){
                     try{
-                        sleep(500/this.bus.size());
+                        sleep(CPU.delay/this.bus.size());
                         this.bus.get(i).setStyle("-fx-stroke: ff9f00;");
                     }catch(Exception ex){
                     }

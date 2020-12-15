@@ -65,7 +65,7 @@ public class CpuRegister extends Register{
     }
     
     //Intercambia el formato del contenido del registro en la GUI
-    public void update(){
+    public void updateGUI(){
         if(null !=  this.content_numberingSystem)switch (this.content_numberingSystem) {
             case BIN:
                 this.contentLabel.setText(this.getBinaryValueAsString());
@@ -83,6 +83,15 @@ public class CpuRegister extends Register{
                 break;
         }
     }
+    
+    public void update(){
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                updateGUI();
+            }
+        });
+    }
 
     public void showInText(){
         Instruction inst = getOpcode(this);
@@ -92,9 +101,7 @@ public class CpuRegister extends Register{
     public void personalizeLabel(String value){
         this.contentLabel.setText(value);
     }
-    public void resetLabel(){
     
-    }
     
     
     

@@ -258,5 +258,40 @@ public class GUI_BusAnimator {
         }
     }
     
+    public void resetRegistersBus(){
+        for(Line l : this.controlUnitToRegisterA){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.controlUnitToRegisterB){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.controlUnitToRegisterC){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.controlUnitToRegisterD){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.ramToRegisterA){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.ramToRegisterB){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.ramToRegisterC){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+        for(Line l : this.ramToRegisterD){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+    }
+    
+    public void resetALUinputBus(){
+        for(Line l : this.controlUnitToALU){
+            l.setStyle("-fx-stroke: #505050;");
+        }
+    }
+    
+
+    
     
 }

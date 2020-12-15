@@ -5,6 +5,7 @@
  */
 package javafxapplication1.CPU;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import static javafxapplication1.CPU.ControlUnit.getInstructionAsString;
@@ -70,7 +71,7 @@ public class RamRegister extends Register{
         this.rectangle.setVisible(!bool);
     }
     
-    public void update(){
+    public void updateGUI(){
         if(this.address_numberingSystem == NumberingSystem.BIN){
             String binaryValue = Integer.toBinaryString(this.address);
             if(binaryValue.length()==1){
@@ -94,5 +95,14 @@ public class RamRegister extends Register{
         }else if(this.content_numberingSystem == NumberingSystem.DEC){
             this.contentLabel.setText(this.getIntegerValueAsString());
         }
-    }  
+    } 
+    
+    public void update(){
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                updateGUI();
+            }
+        });
+    }
 }

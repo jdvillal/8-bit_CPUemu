@@ -21,21 +21,22 @@ public class ALU {
     }
 
     
-    public RamRegister operate(RamRegister input1, RamRegister input2, Instruction opcode){
+    public int operate(Register input1, Register input2, Instruction opcode){
         switch (opcode) {
             case ADD:
-                return SUM(input1,input2);
+                return ADD(input1,input2);
             case SUB:
                 return SUB(input1,input2);
             default:
-                return null;
+                return 0;
         }
     }  
     
-    private RamRegister SUM(RamRegister b1, RamRegister b2){
-        int input1 = Integer.parseInt(b1.getBinaryValueAsString());
-        int input2 = Integer.parseInt(b2.getBinaryValueAsString());
+    private int ADD(Register b1, Register b2){
+        int input1 = Integer.parseInt(b1.getIntegerValueAsString());
+        int input2 = Integer.parseInt(b2.getIntegerValueAsString());
         Integer output = input1 + input2;
+        System.out.println(input1 + " " + input2 + " " + output);
         Boolean o_flag = false;
         Boolean z_flag = false;
         Boolean n_flag = false;
@@ -49,12 +50,12 @@ public class ALU {
             n_flag = true;
         }
         this.controlUnit.setFlags(o_flag, z_flag, n_flag);
-        return new RamRegister(output.toString());  
+        return output; 
     }
     
-    private RamRegister SUB(RamRegister b1, RamRegister b2){
-        int input1 = Integer.parseInt(b1.getBinaryValueAsString());
-        int input2 = Integer.parseInt(b2.getBinaryValueAsString());
+    private int SUB(Register b1, Register b2){
+        int input1 = Integer.parseInt(b1.getIntegerValueAsString());
+        int input2 = Integer.parseInt(b2.getIntegerValueAsString());
         Integer output = input1 - input2;
         Boolean o_flag = false;
         Boolean z_flag = false;
@@ -69,7 +70,7 @@ public class ALU {
             n_flag = true;
         }
         this.controlUnit.setFlags(o_flag, z_flag, n_flag);
-        return new RamRegister(output.toString());  
+        return output;  
     }
     
 }
