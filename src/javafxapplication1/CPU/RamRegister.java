@@ -8,25 +8,20 @@ package javafxapplication1.CPU;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import static javafxapplication1.CPU.ControlUnit.getInstructionAsString;
-
 /**
- *
  * @author Jorge
  */
 public class RamRegister extends Register{  
     public int address;
     Label addressLabel;
     Label contentLabel;
-    Rectangle rectangle;
-    
+    Rectangle rectangle;    
     NumberingSystem address_numberingSystem;
-    NumberingSystem content_numberingSystem;
-    
+    NumberingSystem content_numberingSystem;   
     
     public RamRegister(int adress){
         super();
-        this.address = adress;
-        
+        this.address = adress;        
         address_numberingSystem = NumberingSystem.BIN;
         content_numberingSystem= NumberingSystem.BIN;
     }
@@ -39,7 +34,6 @@ public class RamRegister extends Register{
         this.addressLabel = addressLbl;
         this.contentLabel = contentLbl;
         this.rectangle = rectangle;
-
     }
     
     public NumberingSystem swapAddressBase(){
@@ -71,6 +65,11 @@ public class RamRegister extends Register{
         return this.content_numberingSystem;
     }
     
+        //Resalta el registro instanciado (THIS) en la GUI 
+    public void setHighlight(Boolean bool){
+        this.rectangle.setVisible(!bool);
+    }
+    
     public void update(){
         if(this.address_numberingSystem == NumberingSystem.BIN){
             String binaryValue = Integer.toBinaryString(this.address);
@@ -95,12 +94,5 @@ public class RamRegister extends Register{
         }else if(this.content_numberingSystem == NumberingSystem.DEC){
             this.contentLabel.setText(this.getIntegerValueAsString());
         }
-    }
-    
-
-    
-
-    
-    
-    
+    }  
 }

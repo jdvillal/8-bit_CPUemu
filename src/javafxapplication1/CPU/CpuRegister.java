@@ -5,6 +5,7 @@
  */
 package javafxapplication1.CPU;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import static javafxapplication1.CPU.ControlUnit.getInstructionAsString;
@@ -32,12 +33,9 @@ public class CpuRegister extends Register{
     }
     
     //Resalta el registro instanciado (THIS) en la GUI 
+
     public void setHighlight(Boolean bool){
-        if(bool){
-            rectangle.setVisible(false);
-        }else{
-            rectangle.setVisible(true);
-        }
+        this.rectangle.setVisible(!bool);
     }
     
     public NumberingSystem swapBase(){

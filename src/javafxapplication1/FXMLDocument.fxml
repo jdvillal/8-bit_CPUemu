@@ -10,9 +10,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1017.0" prefWidth="1654.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="1020.0" prefWidth="1500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
    <children>
-      <ImageView fitHeight="945.0" fitWidth="1796.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1029.0" fitWidth="1696.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@cpu.png" />
          </image>
@@ -384,6 +384,16 @@
       <Button fx:id="ramBtn15" layoutX="1571.0" layoutY="814.0" mnemonicParsing="false" onAction="#swapRamContentBase_15" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button layoutX="104.0" layoutY="2.0" mnemonicParsing="false" onAction="#line" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: transparent;" text="Escribir RAM" />
       <ButtonBar layoutX="814.0" layoutY="63.0" />
+      <Line fx:id="data5_line1" endX="1700.0" endY="225.0" layoutY="-200.0" startY="225.0" stroke="#d0d0d0" />
+      <Button layoutX="223.0" layoutY="2.0" mnemonicParsing="false" onAction="#resetBus" style="-fx-background-color: transparent;" text="reset" />
+      <Line fx:id="ALUout2_line1" endX="552.883544921875" endY="789.6609497070312" layoutX="-226.0" layoutY="-167.0" rotate="66.0" scaleY="9.0" startX="286.0" startY="789.0" />
+      <Line fx:id="ALUout2_line11" endX="557.0" endY="789.9581909179688" layoutX="-37.0" layoutY="-169.0" rotate="111.1" scaleX="1.006" scaleY="9.0" startX="286.0" startY="789.0" />
+      <Line fx:id="ALUout2_line111" endX="397.0" endY="789.0" layoutX="44.0" layoutY="-292.0" scaleY="9.0" startX="286.0" startY="789.0" />
+      <Line fx:id="ALUout2_line1111" endX="394.5" endY="789.0" layoutX="-61.0" layoutY="-44.0" scaleY="9.0" startX="304.0" startY="789.0" />
+      <Line fx:id="ALUout2_line1112" endX="396.0" endY="789.0" layoutX="-149.0" layoutY="-292.0" scaleY="9.0" startX="286.0" startY="789.0" />
+      <Line fx:id="ALUout2_line1113" endX="382.0" endY="789.0" layoutX="-67.0" layoutY="-250.0" rotate="62.0" scaleY="10.0" startX="285.0" startY="789.0" />
+      <Line fx:id="ALUout2_line11131" endX="385.0" endY="789.0" layoutX="-26.0" layoutY="-250.0" rotate="-63.0" scaleY="10.0" startX="289.0" startY="789.0" />
+      <Line fx:id="data5_line11" endX="1700.0" endY="2.0" startY="2.0" stroke="#d0d0d0" />
       
    </children>
 </AnchorPane>

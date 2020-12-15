@@ -14,7 +14,8 @@ import javafx.scene.shape.Line;
  */
 public class GUI_BusAnimator {
     private ArrayList<ArrayList<Line>> all;
-    
+    private boolean reverse;
+    private ArrayList<Line> toAnimate;
     //writeEnable
     private ArrayList<Line> ramToRegisterA;
     private ArrayList<Line> ramToRegisterB;
@@ -39,7 +40,6 @@ public class GUI_BusAnimator {
     private ArrayList<Line> flags;
     
     public GUI_BusAnimator(){
-        //this.animator = new LineAnimator();
         this.all = new ArrayList<>();
     }
 
@@ -119,6 +119,7 @@ public class GUI_BusAnimator {
     }
     
    //METODOS
+    
     public void writeEnable_On(){
         LineAnimator animator = new LineAnimator();
         animator.setBusAndSence(this.writeEnable, false);
@@ -126,7 +127,7 @@ public class GUI_BusAnimator {
     }
     
     public void readEnable_On(){
-        LineAnimator animator = new LineAnimator();
+         LineAnimator animator = new LineAnimator();
         animator.setBusAndSence(this.readEnable,false);
         animator.start();
     }
@@ -225,7 +226,7 @@ public class GUI_BusAnimator {
         animator.start();
     }
     
-    public void ramToControlUnit(){
+    public void ramToControlUnit(){////////////////////////////
         LineAnimator animator = new LineAnimator();
         animator.setBusAndSence(this.ramToControlUnit, false);
         animator.start();
@@ -240,7 +241,7 @@ public class GUI_BusAnimator {
     public void controlUnitToALU(){
         LineAnimator animator = new LineAnimator();
         animator.setBusAndSence(this.controlUnitToALU, false);
-        animator.start();
+       animator.start();
     }
     
     public void ALUtoControlUnit(){
@@ -249,7 +250,7 @@ public class GUI_BusAnimator {
         animator.start();
     }
 
-    public void restart(){
+    public void resetBus(){
         for(ArrayList<Line> ar: all){
             for(Line l : ar){
                 l.setStyle("-fx-stroke: #505050;");

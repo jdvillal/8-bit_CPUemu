@@ -33,6 +33,12 @@ public abstract class Register {
     public void setValue(Byte value){
         this.value = value;
     }
+    public void setValue(Integer value){
+        this.value = Byte.parseByte(value.toString());
+    }
+    public void copyValue(Register register){
+        this.value = register.getValue();
+    }
     
     public Byte getValue(){
         return this.value;

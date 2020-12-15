@@ -278,4 +278,12 @@ public class ControlUnit {
         this.instructionRegister.setHighlight(true);
     }
     
+    public CpuRegister getAddressRegister(){
+        return this.addressRegister;
+    }
+    
+    public CpuRegister getInstructionRegister(){
+        return this.instructionRegister;
+    }
+    
 }

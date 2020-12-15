@@ -5,6 +5,7 @@
  */
 package javafxapplication1.CPU;
 
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import javafx.scene.shape.Line;
 
@@ -23,24 +24,26 @@ public class LineAnimator extends Thread{
     
     @Override
     public void run() {
-        if(!setReverse){
-            for(Line l : this.bus){
-                try{
-                    sleep(3000);
-                    l.setStyle("-fx-stroke: ff9f00;");
-                }catch(Exception ex){
+      // synchronized(CPU.class){
+            if(!setReverse){
+                for(Line l : this.bus){
+                    try{
+                        sleep(500/this.bus.size());
+                        l.setStyle("-fx-stroke: ff9f00;");
+                    }catch(Exception ex){
+                    }
+                }
+            }else{
+                for(int i = this.bus.size()-1; i >= 0; i--){
+                    try{
+                        sleep(500/this.bus.size());
+                        this.bus.get(i).setStyle("-fx-stroke: ff9f00;");
+                    }catch(Exception ex){
+                    }
                 }
             }
-        }else{
-            for(int i = this.bus.size()-1; i >= 0; i--){
-                try{
-                    sleep(150);
-                    this.bus.get(i).setStyle("-fx-stroke: ff9f00;");
-                }catch(Exception ex){
-                }
-            }
-        }
-        this.setReverse = false;
+            //GUI_BusAnimator.current_turn = GUI_BusAnimator.current_turn + 1;
+       //}
     }
     
 }

@@ -5,14 +5,14 @@
  */
 package javafxapplication1.CPU;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
+import javafx.application.Platform;
 
 /**
  *
  * @author Jorge
  */
-public class CPU {
+public class CPU implements Runnable{
 
     private ALU alu;
     private ControlUnit controlUnit;
@@ -55,11 +55,16 @@ public class CPU {
     }
     
     public void updateGUI(){
-        registerA.update();
-        registerB.update();
-        registerC.update();
-        registerD.update();
-        this.controlUnit.updateGUI();
+        Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    registerA.update();
+                    registerB.update();
+                    registerC.update();
+                    registerD.update();
+                    controlUnit.updateGUI();
+                }
+            });
     }
     
     public NumberingSystem swapAddressRegisterBase(){
@@ -95,23 +100,50 @@ public class CPU {
     }
     
     
-    public void fetch( ){
-         this.animator.addressInput_On();
-         
-         
-         this.animator.readEnable_On();
-         
-         this.animator.ramToControlUnit();
-         
-         this.controlUnit.fetch();
+    public void fetch(){
+        try{
+            this.controlUnit.getAddressRegister().setHighlight(true);
+            sleep(500);
+            this.animator.addressInput_On();
+            sleep(500);
+            this.animator.readEnable_On();
+            sleep(500);
+            int address = Integer.parseInt(this.controlUnit.getAddressRegister().getIntegerValueAsString());
+            this.ram.setHighlight(address, true);
+            sleep(500);
+            this.animator.ramToControlUnit();
+            sleep(500);
+            this.controlUnit.getInstructionRegister().setHighlight(true);
+            sleep(200);
+            this.controlUnit.getInstructionRegister().copyValue(this.ram.getByAddress(address));
+            this.updateGUI();     
+        }catch(Exception ex){
+        }
     }
     
+
+    
     public void decode( ){
-        
+        try{
+            
+        }catch(Exception ex){
+        }
     }
     
     public void excecute( ){
-        
+        try{
+            
+        }catch(Exception ex){
+        }
+    }
+    
+    public void resetBus(){
+        this.animator.resetBus();
+    }
+    
+    @Override
+    public void run(){
+        this.fetch();
     }
     
 }

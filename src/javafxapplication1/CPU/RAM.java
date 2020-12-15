@@ -6,6 +6,7 @@
 package javafxapplication1.CPU;
 
 import java.util.ArrayList;
+import javafx.application.Platform;
 
 /**
  *
@@ -39,9 +40,22 @@ public class RAM {
     }
     
     public void update(){
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                updateGUI();
+            }
+        });
+    }
+    
+    public void updateGUI(){
         for(int i = 0; i < registers.size() ; i ++){
             registers.get(i).update();
         }
+    }
+    
+    public void setHighlight(int address, boolean bool){
+        this.registers.get(address).setHighlight(bool);
     }
     
     

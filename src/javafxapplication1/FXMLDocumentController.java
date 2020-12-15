@@ -355,7 +355,7 @@ public class FXMLDocumentController implements Initializable {
         this.ram.getByAddress(15).setRamRegisterGUI(addr15Num_lbl, addr15_lbl, addr15_rec);
         
         this.ram.update();
-        
+        this.cpu.setRAM(this.ram);
         
         ArrayList<Line> ramToRegisterA = new ArrayList<>();
         ramToRegisterA.add(data1_line);
@@ -606,7 +606,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void line(ActionEvent event){
         this.cpu.setAnimator(this.bs_animator);
-        this.cpu.fetch();
+        Thread th = new Thread(this.cpu);
+        th.start();
+    }
+    
+    @FXML
+    private void resetBus(ActionEvent event){
+        this.cpu.resetBus();
     }
     
     @FXML
