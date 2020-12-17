@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -424,6 +425,16 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button layoutX="188.0" layoutY="-13.0" mnemonicParsing="false" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@run.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Slider fx:id="clockSpeed_slider" blockIncrement="0.0" layoutX="283.0" layoutY="7.0" max="0.0" prefHeight="14.0" prefWidth="194.0" />
       
    </children>
 </AnchorPane>

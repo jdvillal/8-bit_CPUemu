@@ -26,7 +26,9 @@ public class CPU implements Runnable{
     private CpuRegister registerC;
     private CpuRegister registerD;
     
-    public static Integer delay;
+    public static int delay;
+    public static int clockSpeed;
+    public int speed;
 
     public CPU() {
         this.controlUnit = new ControlUnit();
@@ -39,12 +41,13 @@ public class CPU implements Runnable{
         this.registerD = new CpuRegister();
         
         this.nextStage = CPU_Stage.FETCH;
-        CPU.delay = 200;
+        CPU.clockSpeed = 300;
+        CPU.delay = clockSpeed;
         
         this.controlUnit.setALU(this.alu);
         this.controlUnit.setRegisters(this.registerA, this.registerB, this.registerC, this.registerD);
     }
-
+    
     public void setRAM(RAM ram) {
         this.ram = ram;
     }
@@ -118,7 +121,23 @@ public class CPU implements Runnable{
     
     public void setFlagsGUI(Rectangle oflag_rec, Rectangle zflag_rec, Rectangle nflag_rec){
         this.controlUnit.setFlagsGUI(oflag_rec, zflag_rec, nflag_rec);
-    }    
+    }
+    
+    public void resetRegisters(){
+        this.registerA.setValue(0);
+        this.registerB.setValue(0);
+        this.registerC.setValue(0);
+        this.registerD.setValue(0);
+        this.controlUnit.getAddressRegister().setValue(0);
+        this.controlUnit.getInstructionRegister().setValue(0);
+        this.updateGUI();
+    }
+    
+    public void resetAll(){
+        this.resetBus();
+        this.resetRegistersHighlight();
+        this.resetRegisters();
+    }
     
     public void fetch(){
         try{
@@ -356,7 +375,7 @@ public class CPU implements Runnable{
                 }
                 //*****************HALT OPERATION************************
             }else if(inst == Instruction.HALT){
-                
+                this.nextStage = CPU_Stage.HALT;
             }
         }catch(Exception ex){
         }
@@ -373,11 +392,14 @@ public class CPU implements Runnable{
     
     }
     
+    public void resetBus(){
+        this.animator.resetBus();
+    }  
     
     
     @Override
     public void run(){
-        if(this.nextStage == CPU_Stage.FETCH){
+       /* if(this.nextStage == CPU_Stage.FETCH){
             this.fetch();
             this.nextStage = CPU_Stage.DECODE;
         }else if(this.nextStage == CPU_Stage.DECODE){
@@ -388,7 +410,29 @@ public class CPU implements Runnable{
             this.nextStage = CPU_Stage.FETCH;
         }else if (this.nextStage == CPU_Stage.HALT){
             this.halt();
-        }
+        }*/
+       
+       while(this.nextStage != CPU_Stage.HALT){
+            try{
+                if(this.nextStage == CPU_Stage.FETCH){
+                    this.fetch();
+                    sleep(CPU.delay);
+                    this.nextStage = CPU_Stage.DECODE;
+                }else if(this.nextStage == CPU_Stage.DECODE){
+                    this.decode();
+                    sleep(CPU.delay);
+                    this.nextStage = CPU_Stage.EXCECUTE;
+                }else if(this.nextStage == CPU_Stage.EXCECUTE){
+                    this.excecute();
+                    sleep(CPU.delay);
+                    this.nextStage = CPU_Stage.FETCH;
+                }else if (this.nextStage == CPU_Stage.HALT){
+                    this.halt();
+                }
+            }catch(Exception ex){}
+       }
+        
+
     }
     
 }

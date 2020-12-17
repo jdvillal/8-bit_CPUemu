@@ -8,10 +8,13 @@ package javafxapplication1;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +26,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -328,10 +333,50 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Rectangle nflag_rec;
     
+    @FXML
+    private Slider clockSpeed_slider;
+    
+    
+   
+    public void onSlide(){
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        double db = Double.parseDouble(df.format(this.clockSpeed_slider.getValue()));
+        if(db == 0){
+            db = 0.1;
+        }
+        this.clockSpeed_slider.setValue(db);
+        this.setClockSpeed(db);
+    }
+    public void setSlider(){
+        this.clockSpeed_slider.setMin(0.5);
+        this.clockSpeed_slider.setMax(4);
+        this.clockSpeed_slider.setValue(1);
+        this.clockSpeed_slider.setShowTickLabels(true);
+        this.clockSpeed_slider.setShowTickMarks(true);
+        this.clockSpeed_slider.setMajorTickUnit(0.50);
+        //this.clockSpeed_slider.setMinorTickCount(0.05);
+        this.clockSpeed_slider.setBlockIncrement(0.05);
+    }
+    
+    public void setClockSpeed(double mult){
+        Double d = CPU.clockSpeed/mult;
+        CPU.delay = d.intValue();
+        System.out.println(d.intValue());
+    }
+    
     
 
     //@FXML
     private void startCPU() {
+        this.setSlider();
+        this.clockSpeed_slider.setOnMouseReleased(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                onSlide();
+            }
+        });
+        
         CpuRegister registerA = new CpuRegister(); registerA.setGUI(regA_lbl, regA_rec);
         cpu.setRegisterA(registerA);
         CpuRegister registerB = new CpuRegister(); registerB.setGUI(regB_lbl, regB_rec);
@@ -366,7 +411,7 @@ public class FXMLDocumentController implements Initializable {
         this.ram.getByAddress(15).setRamRegisterGUI(addr15Num_lbl, addr15_lbl, addr15_rec);
         
         this.ram.update();
-        this.cpu.setRAM(this.ram);
+        this.cpu.setRAM(this.ram); 
         
         ArrayList<Line> ramToRegisterA = new ArrayList<>();
         ramToRegisterA.add(data1_line);
@@ -463,6 +508,10 @@ public class FXMLDocumentController implements Initializable {
         
         this.bs_animator.setReadEnable(rEnable);
         this.bs_animator.setWriteEnable(wEnable);
+        try{
+            this.cpu.resetAll();
+            this.ram.resetHighlight();
+        }catch(Exception ex){}
     }
     
     @FXML
@@ -650,7 +699,7 @@ public class FXMLDocumentController implements Initializable {
         
         selectFileBtn.setOnAction((ActionEvent event) -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Buscar un archivo de texto");
+            fileChooser.setTitle("Buscar un archivo");
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile == null) {
                 System.out.println("No File selected");
@@ -669,7 +718,7 @@ public class FXMLDocumentController implements Initializable {
                     primaryStage.close();
                 }else{
                     Alert al = new Alert(AlertType.ERROR);
-                    al.setTitle("Error al leer el directorio seleccionado");
+                    al.setTitle("Error al leer el archivo seleccionado");
                     al.setContentText("El formato del archivo cargado no es compatible");
                     al.showAndWait();  
                 }
