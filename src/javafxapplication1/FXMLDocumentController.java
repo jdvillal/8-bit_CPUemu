@@ -14,8 +14,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -617,6 +619,20 @@ public class FXMLDocumentController implements Initializable {
         this.cpu.setAnimator(this.bs_animator);
         Thread th = new Thread(this.cpu);
         th.start();
+    }
+    
+    @FXML
+    private void newFile(){
+        try{
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("TextEditor.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("LittleEmu - Editor de codigo");
+            stage.show();
+        }catch(Exception ex){
+        
+        }
     }
     
     @FXML

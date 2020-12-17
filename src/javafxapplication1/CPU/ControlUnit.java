@@ -74,6 +74,16 @@ public class ControlUnit {
         return this.O_flag || this.Z_flag || this.N_flag;
     }
     
+    public boolean getOflag(){
+        return this.O_flag;
+    }
+    public boolean getZflag(){
+        return this.Z_flag;
+    }
+    public boolean getNflag(){
+        return this.N_flag;
+    }
+    
     public void updateFlagsGUI(){
         if(this.O_flag){
             this.oflag_rec.setStyle("-fx-fill: #ff9f00;");

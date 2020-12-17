@@ -118,8 +118,7 @@ public class CPU implements Runnable{
     
     public void setFlagsGUI(Rectangle oflag_rec, Rectangle zflag_rec, Rectangle nflag_rec){
         this.controlUnit.setFlagsGUI(oflag_rec, zflag_rec, nflag_rec);
-    }
-    
+    }    
     
     public void fetch(){
         try{
@@ -144,8 +143,6 @@ public class CPU implements Runnable{
         }catch(Exception ex){
         }
     }
-    
-
     
     public void decode( ){
         try{
@@ -253,7 +250,7 @@ public class CPU implements Runnable{
                 }
                 
                 this.addrRegisterCountUp();
-        
+                //***************************LOAD OPERATIONS*************************   
             }else if(inst == Instruction.LOAD_A || inst == Instruction.LOAD_B || inst == Instruction.LOAD_C ||inst == Instruction.LOAD_D){
                 String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
                 String load_addr = ""+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
@@ -294,6 +291,7 @@ public class CPU implements Runnable{
                     this.registerD.update();
                 }
                 this.addrRegisterCountUp();
+                //***************************STORE OPERATIONS************************************
             }else if(inst == Instruction.STORE_A || inst == Instruction.STORE_B || inst == Instruction.STORE_C ||inst == Instruction.STORE_D){
                 String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
                 String store_addr = ""+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
@@ -328,24 +326,35 @@ public class CPU implements Runnable{
                 sleep(CPU.delay);
                 this.animator.writeEnable_On();
                 sleep(CPU.delay);
+                this.ram.setHighlight(addr, true);
                 this.ram.update();
                 
                 this.addrRegisterCountUp();
             }else if(inst == Instruction.JUMP || inst == Instruction.JUMP_ABV || inst == Instruction.JUMP_BLW || inst == Instruction.JUMP_EQL || inst == Instruction.JUMP_NEG){
-                if(inst == Instruction.JUMP){
-                    for(int i = 0; i  < 10; i ++){
-                        if(i%2 == 0){
-                            this.controlUnit.getAddressRegister().setHighlight(true);
-                        }else{
-                            this.controlUnit.getAddressRegister().setHighlight(false);
-                        }
-                        sleep(CPU.delay/8);
+                for(int i = 0; i  < 11; i ++){
+                    if(i%2 == 0){
+                        this.controlUnit.getAddressRegister().setHighlight(true);
+                    }else{
+                        this.controlUnit.getAddressRegister().setHighlight(false);
                     }
+                        sleep(CPU.delay/8);
+                }
+                if(inst == Instruction.JUMP){
                     String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
                     String jump_addr = "0000"+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
                     this.controlUnit.getAddressRegister().setValue(jump_addr);
                     this.updateGUI();
+                }if(inst == Instruction.JUMP_NEG){
+                    if(this.controlUnit.getNflag()){
+                        String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
+                        String jump_addr = "0000"+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
+                        this.controlUnit.getAddressRegister().setValue(jump_addr);
+                        this.updateGUI();
+                    }else{
+                        this.addrRegisterCountUp();
+                    }
                 }
+                //*****************HALT OPERATION************************
             }else if(inst == Instruction.HALT){
                 
             }
@@ -363,6 +372,8 @@ public class CPU implements Runnable{
     public void halt(){
     
     }
+    
+    
     
     @Override
     public void run(){

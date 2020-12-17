@@ -365,7 +365,14 @@
       <Button fx:id="regD_btn" layoutX="945.0" layoutY="311.0" mnemonicParsing="false" onAction="#swapRegisters" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="instructionRegister_btn" layoutX="846.0" layoutY="548.0" mnemonicParsing="false" onAction="#swapInstructionRegister" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="addressRegister_btn" layoutX="852.0" layoutY="664.0" mnemonicParsing="false" onAction="#swapAddressRegister" prefHeight="15.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="(BIN)" />
-      <Button fx:id="uploadFile_btn" layoutY="2.0" mnemonicParsing="false" onAction="#displayFilePicker" style="-fx-background-color: transparent;" text="Cargar Archivo" />
+      <Button fx:id="uploadFile_btn" layoutX="-10.0" layoutY="-13.0" mnemonicParsing="false" onAction="#displayFilePicker" prefHeight="55.0" prefWidth="55.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@file.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Button fx:id="ramBtn0" layoutX="1571.0" layoutY="200.0" mnemonicParsing="false" onAction="#swapRamContentBase_0" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn1" layoutX="1571.0" layoutY="241.0" mnemonicParsing="false" onAction="#swapRamContentBase_1" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn2" layoutX="1571.0" layoutY="282.0" mnemonicParsing="false" onAction="#swapRamContentBase_2" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
@@ -382,10 +389,24 @@
       <Button fx:id="ramBtn13" layoutX="1571.0" layoutY="732.0" mnemonicParsing="false" onAction="#swapRamContentBase_13" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn14" layoutX="1571.0" layoutY="773.0" mnemonicParsing="false" onAction="#swapRamContentBase_14" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn15" layoutX="1571.0" layoutY="814.0" mnemonicParsing="false" onAction="#swapRamContentBase_15" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
-      <Button layoutX="104.0" layoutY="2.0" mnemonicParsing="false" onAction="#line" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: transparent;" text="Escribir RAM" />
+      <Button layoutX="137.0" layoutY="-13.0" mnemonicParsing="false" onAction="#line" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@next.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ButtonBar layoutX="814.0" layoutY="63.0" />
-      <Line fx:id="data5_line1" endX="1700.0" endY="225.0" layoutY="-200.0" startY="225.0" stroke="#d0d0d0" />
-      <Button layoutX="223.0" layoutY="2.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="reset" />
+      <Line fx:id="data5_line1" endX="1700.0" endY="242.0" layoutY="-200.0" startY="242.0" stroke="#d0d0d0" />
+      <Button layoutX="38.0" layoutY="-13.0" mnemonicParsing="false" onAction="#newFile" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@new_File.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Line fx:id="ALUout2_line1" endX="552.883544921875" endY="789.6609497070312" layoutX="-226.0" layoutY="-167.0" rotate="66.0" scaleY="9.0" startX="286.0" startY="789.0" />
       <Line fx:id="ALUout2_line11" endX="557.0" endY="789.9581909179688" layoutX="-37.0" layoutY="-169.0" rotate="111.1" scaleX="1.006" scaleY="9.0" startX="286.0" startY="789.0" />
       <Line fx:id="ALUout2_line111" endX="397.0" endY="789.0" layoutX="44.0" layoutY="-292.0" scaleY="9.0" startX="286.0" startY="789.0" />
@@ -394,6 +415,15 @@
       <Line fx:id="ALUout2_line1113" endX="382.0" endY="789.0" layoutX="-67.0" layoutY="-250.0" rotate="62.0" scaleY="10.0" startX="285.0" startY="789.0" />
       <Line fx:id="ALUout2_line11131" endX="385.0" endY="789.0" layoutX="-26.0" layoutY="-250.0" rotate="-63.0" scaleY="10.0" startX="289.0" startY="789.0" />
       <Line fx:id="data5_line11" endX="1700.0" endY="2.0" startY="2.0" stroke="#d0d0d0" />
+      <Button layoutX="81.0" layoutY="-13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@previous.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       
    </children>
 </AnchorPane>

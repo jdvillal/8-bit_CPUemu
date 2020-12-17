@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.TextEditorController">
+   <children>
+      <TextArea layoutY="35.0" prefHeight="621.0" prefWidth="462.0" />
+      <ToolBar prefHeight="35.0" prefWidth="462.0">
+        <items>
+          <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Guardar" />
+            <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Inspeccionar" />
+            <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Ejecutar" />
+            <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Ayuda" />
+        </items>
+      </ToolBar>
+   </children>
+</AnchorPane>

@@ -9,20 +9,28 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Jorge
  */
-public class JavaFXApplication1 extends Application {
+public class LittleEmuApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
         Scene scene = new Scene(root);
+        
         stage.setScene(scene);
+        stage.setMaxHeight(1020);
+        stage.setMaxWidth(1700);
+        stage.setMinHeight(1020);
+        stage.setMinWidth(1700);
+        stage.setTitle("LittleEmu - Emulador");
+        stage.getIcons().add(new Image(LittleEmuApp.class.getResourceAsStream("microchip.png")));
+
         stage.show();
     }
 
