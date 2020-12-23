@@ -152,7 +152,7 @@ public class ControlUnit {
                 case("1011"):
                     return Instruction.JUMP_NEG;
                 case("1100"):
-                    return Instruction.JUMP_EQL;
+                    return Instruction.JUMP_ZRO;
                 case("1101"):
                     return Instruction.JUMP_ABV;
                 case("1110"):
@@ -165,7 +165,6 @@ public class ControlUnit {
     }
     
     public static int stringBinaryToInt(String st){
-        System.out.println(st);
         switch (st) {
             case "0000":
                 return 0;

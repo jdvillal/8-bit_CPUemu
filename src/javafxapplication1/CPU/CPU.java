@@ -20,6 +20,8 @@ public class CPU implements Runnable{
     private RAM ram;
     private GUI_BusAnimator animator;
     private CPU_Stage nextStage;
+    private EmuStage emulationStage;
+    private EmuMode emulationMode;
     
     private CpuRegister registerA;
     private CpuRegister registerB;
@@ -29,7 +31,8 @@ public class CPU implements Runnable{
     public static int delay;
     public static int clockSpeed;
     public int speed;
-
+    public static boolean interrupt;
+    
     public CPU() {
         this.controlUnit = new ControlUnit();
         this.alu = new ALU(controlUnit);
@@ -40,13 +43,68 @@ public class CPU implements Runnable{
         this.registerC = new CpuRegister();
         this.registerD = new CpuRegister();
         
+        interrupt = false;
         this.nextStage = CPU_Stage.FETCH;
+        this.emulationStage = EmuStage.PAUSED;
+        this.emulationMode = EmuMode.BY_STEP;
         CPU.clockSpeed = 300;
         CPU.delay = clockSpeed;
         
         this.controlUnit.setALU(this.alu);
         this.controlUnit.setRegisters(this.registerA, this.registerB, this.registerC, this.registerD);
     }
+    
+    public void setStepMode(Boolean stepMode){
+        if(stepMode){
+            this.emulationMode = EmuMode.BY_STEP;
+        }else{
+            this.emulationMode = EmuMode.BY_LOOP;
+        } 
+    }
+    
+    public EmuStage swapPauseStage(){
+        if(this.emulationStage == EmuStage.PAUSED){
+            this.emulationStage = EmuStage.RUNNING;
+            return EmuStage.PAUSED;
+        }else if (this.emulationStage == EmuStage.RUNNING){
+            this.emulationStage = EmuStage.PAUSED;
+            return EmuStage.RUNNING;
+        }
+        return null;
+    }
+    
+    public void pauseEnulation(){
+        this.emulationStage = EmuStage.PAUSED;
+    }
+    
+    public void resumeEmulation(){
+        this.emulationStage = EmuStage.RUNNING;
+    }
+    
+    public boolean isPaused(){
+        if(this.emulationStage == EmuStage.PAUSED){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean isRunning(){
+        return !this.isPaused();
+    }
+    
+    public boolean isStepRunning(){
+        if(this.emulationMode == EmuMode.BY_STEP){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean isLoopRunning(){
+        return !this.isStepRunning();
+    }
+    
     
     public void setRAM(RAM ram) {
         this.ram = ram;
@@ -60,8 +118,7 @@ public class CPU implements Runnable{
         registerA.swapBase();
         registerB.swapBase();
         registerC.swapBase();
-        return registerD.swapBase();
-        
+        return registerD.swapBase(); 
     }
     
     public void updateGUI(){
@@ -205,7 +262,7 @@ public class CPU implements Runnable{
                 }else if(op1 == 'D'){
                     op1_reg = this.registerD;
                     this.registerD.setHighlight(true);
-                   this.animator.registerDtoControlUnit();
+                    this.animator.registerDtoControlUnit();
                 }
                 
                 if(op2 == 'A'){
@@ -229,7 +286,6 @@ public class CPU implements Runnable{
                 sleep(CPU.delay);
                 this.animator.controlUnitToALU();
                 int output = this.alu.operate(op1_reg, op2_reg, inst);
-                System.out.println("output: "+output + inst);
                 sleep(CPU.delay);
                 this.resetRegistersHighlight();
                 this.animator.ALUtoControlUnit();
@@ -265,6 +321,8 @@ public class CPU implements Runnable{
                 if(this.controlUnit.isFlagOn()){
                     this.animator.flags_On();
                     sleep(CPU.delay);
+                    this.controlUnit.updateFlagsGUI();
+                }else{
                     this.controlUnit.updateFlagsGUI();
                 }
                 
@@ -349,7 +407,7 @@ public class CPU implements Runnable{
                 this.ram.update();
                 
                 this.addrRegisterCountUp();
-            }else if(inst == Instruction.JUMP || inst == Instruction.JUMP_ABV || inst == Instruction.JUMP_BLW || inst == Instruction.JUMP_EQL || inst == Instruction.JUMP_NEG){
+            }else if(inst == Instruction.JUMP || inst == Instruction.JUMP_ABV || inst == Instruction.JUMP_BLW || inst == Instruction.JUMP_ZRO || inst == Instruction.JUMP_NEG){
                 for(int i = 0; i  < 11; i ++){
                     if(i%2 == 0){
                         this.controlUnit.getAddressRegister().setHighlight(true);
@@ -372,10 +430,20 @@ public class CPU implements Runnable{
                     }else{
                         this.addrRegisterCountUp();
                     }
+                }if(inst == Instruction.JUMP_ZRO){
+                    if(this.controlUnit.getZflag()){
+                        String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
+                        String jump_addr = "0000"+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
+                        this.controlUnit.getAddressRegister().setValue(jump_addr);
+                        this.updateGUI();
+                    }else{
+                        this.addrRegisterCountUp();
+                    }
                 }
                 //*****************HALT OPERATION************************
             }else if(inst == Instruction.HALT){
                 this.nextStage = CPU_Stage.HALT;
+                Thread.currentThread().interrupt();
             }
         }catch(Exception ex){
         }
@@ -383,55 +451,62 @@ public class CPU implements Runnable{
     
     public void addrRegisterCountUp(){
         int next_addr = Integer.parseInt(this.controlUnit.getAddressRegister().getIntegerValueAsString())+1;
-        System.out.println(next_addr);
         this.controlUnit.getAddressRegister().setValue(next_addr);
         this.updateGUI();
-    }
-    
-    public void halt(){
-    
     }
     
     public void resetBus(){
         this.animator.resetBus();
     }  
     
+    public CPU_Stage getNextStage(){
+        return this.nextStage;
+    }
+    
+    public static void safeInterrupt(){
+        interrupt = true;
+    }
     
     @Override
     public void run(){
-       /* if(this.nextStage == CPU_Stage.FETCH){
-            this.fetch();
-            this.nextStage = CPU_Stage.DECODE;
-        }else if(this.nextStage == CPU_Stage.DECODE){
-            this.decode();
-            this.nextStage = CPU_Stage.EXCECUTE;
-        }else if(this.nextStage == CPU_Stage.EXCECUTE){
-            this.excecute();
-            this.nextStage = CPU_Stage.FETCH;
-        }else if (this.nextStage == CPU_Stage.HALT){
-            this.halt();
-        }*/
-       
-       while(this.nextStage != CPU_Stage.HALT){
-            try{
-                if(this.nextStage == CPU_Stage.FETCH){
-                    this.fetch();
-                    sleep(CPU.delay);
-                    this.nextStage = CPU_Stage.DECODE;
-                }else if(this.nextStage == CPU_Stage.DECODE){
-                    this.decode();
-                    sleep(CPU.delay);
-                    this.nextStage = CPU_Stage.EXCECUTE;
-                }else if(this.nextStage == CPU_Stage.EXCECUTE){
-                    this.excecute();
-                    sleep(CPU.delay);
-                    this.nextStage = CPU_Stage.FETCH;
-                }else if (this.nextStage == CPU_Stage.HALT){
-                    this.halt();
-                }
-            }catch(Exception ex){}
-       }
-        
+        if(this.emulationMode == EmuMode.BY_STEP){
+            if(this.nextStage == CPU_Stage.FETCH){
+                this.fetch();
+                this.nextStage = CPU_Stage.DECODE;
+            }else if(this.nextStage == CPU_Stage.DECODE){
+                this.decode();
+                this.nextStage = CPU_Stage.EXCECUTE;
+            }else if(this.nextStage == CPU_Stage.EXCECUTE){
+                this.excecute();
+                this.nextStage = CPU_Stage.FETCH;
+            }else if (this.nextStage == CPU_Stage.HALT){
+                Thread.currentThread().interrupt();
+                Thread.currentThread().stop();
+            }
+        }else if (this.emulationMode == EmuMode.BY_LOOP){    
+           while(!interrupt && this.nextStage != CPU_Stage.HALT && this.emulationMode == EmuMode.BY_LOOP && this.emulationStage != EmuStage.PAUSED){
+                try{
+                    if(this.nextStage == CPU_Stage.FETCH){
+                        this.fetch();
+                        sleep(CPU.delay);
+                        this.nextStage = CPU_Stage.DECODE;
+                    }else if(this.nextStage == CPU_Stage.DECODE){
+                        this.decode();
+                        sleep(CPU.delay);
+                        this.nextStage = CPU_Stage.EXCECUTE;
+                    }else if(this.nextStage == CPU_Stage.EXCECUTE){
+                        this.excecute();
+                        sleep(CPU.delay);
+                        this.nextStage = CPU_Stage.FETCH;
+                    }else if (this.nextStage == CPU_Stage.HALT){
+                        Thread.currentThread().interrupt();
+                        Thread.currentThread().stop();
+                    }
+                }catch(Exception ex){}
+            }
+            Thread.currentThread().interrupt();
+
+        }
 
     }
     

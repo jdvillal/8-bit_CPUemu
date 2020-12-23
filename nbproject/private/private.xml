@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/ControlUnit.java</file>
-            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/ALU.java</file>
+            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/LineAnimator.java</file>
             <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/CPU.java</file>
+            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/EmuStage.java</file>
             <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/EmuMode.java</file>
             <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/TextEditorController.java</file>
-            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/CPU/RAM.java</file>
-            <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/TextEditor.fxml</file>
             <file>file:/C:/Users/Jorge/Desktop/emu_project/8-bit_CPUemu/src/javafxapplication1/LittleEmuApp.java</file>
         </group>
     </open-files>

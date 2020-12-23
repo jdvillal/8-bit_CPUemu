@@ -42,6 +42,11 @@ public class ALU {
         Boolean n_flag = false;
         if(output > 127 || output < -128){
             o_flag = true;
+            if(output > 127){
+                output = output - 128;
+            }else if(output < -128){
+                output = output + 256;
+            }
         }
         if(output == 0){
             z_flag = true;
@@ -62,6 +67,11 @@ public class ALU {
         Boolean n_flag = false;
         if(output > 127 || output < -128){
             o_flag = true;
+            if(output > 127){
+                output = output - 128;
+            }else if(output < -128){
+                output = output + 256;
+            }
         }
         if(output == 0){
             z_flag = true;

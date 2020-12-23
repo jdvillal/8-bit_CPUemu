@@ -390,7 +390,7 @@
       <Button fx:id="ramBtn13" layoutX="1571.0" layoutY="732.0" mnemonicParsing="false" onAction="#swapRamContentBase_13" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn14" layoutX="1571.0" layoutY="773.0" mnemonicParsing="false" onAction="#swapRamContentBase_14" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
       <Button fx:id="ramBtn15" layoutX="1571.0" layoutY="814.0" mnemonicParsing="false" onAction="#swapRamContentBase_15" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;" text="(BIN)" />
-      <Button layoutX="137.0" layoutY="-13.0" mnemonicParsing="false" onAction="#line" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+      <Button fx:id="stepRun_btn" layoutX="137.0" layoutY="-13.0" mnemonicParsing="false" onAction="#stepRun" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView>
                <image>
@@ -416,7 +416,7 @@
       <Line fx:id="ALUout2_line1113" endX="382.0" endY="789.0" layoutX="-67.0" layoutY="-250.0" rotate="62.0" scaleY="10.0" startX="285.0" startY="789.0" />
       <Line fx:id="ALUout2_line11131" endX="385.0" endY="789.0" layoutX="-26.0" layoutY="-250.0" rotate="-63.0" scaleY="10.0" startX="289.0" startY="789.0" />
       <Line fx:id="data5_line11" endX="1700.0" endY="2.0" startY="2.0" stroke="#d0d0d0" />
-      <Button layoutX="81.0" layoutY="-13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+      <Button fx:id="previous_btn" layoutX="81.0" layoutY="-13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView>
                <image>
@@ -425,7 +425,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="188.0" layoutY="-13.0" mnemonicParsing="false" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+      <Button fx:id="loopRun_btn" layoutX="188.0" layoutY="-13.0" mnemonicParsing="false" onAction="#loopRun" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView>
                <image>
@@ -434,7 +434,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Slider fx:id="clockSpeed_slider" blockIncrement="0.0" layoutX="283.0" layoutY="7.0" max="0.0" prefHeight="14.0" prefWidth="194.0" />
+      <Slider fx:id="clockSpeed_slider" blockIncrement="0.0" layoutX="283.0" layoutY="7.0" max="0.0" prefHeight="14.0" prefWidth="266.0" />
       
    </children>
 </AnchorPane>

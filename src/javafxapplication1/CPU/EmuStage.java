@@ -9,22 +9,7 @@ package javafxapplication1.CPU;
  *
  * @author Jorge
  */
-public enum Instruction {
-    LOAD_A,
-    LOAD_B,
-    LOAD_C,
-    LOAD_D,
-    STORE_A,
-    STORE_B,
-    STORE_C,
-    STORE_D,
-    ADD,
-    SUB,
-    JUMP,
-    JUMP_NEG,
-    JUMP_ZRO,
-    JUMP_ABV,
-    JUMP_BLW,
-    HALT;
-    
+public enum EmuStage {
+    RUNNING,
+    PAUSED
 }

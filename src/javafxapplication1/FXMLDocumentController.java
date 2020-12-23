@@ -27,15 +27,19 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxapplication1.CPU.CPU;
+import javafxapplication1.CPU.CPU_Stage;
 import javafxapplication1.CPU.CpuRegister;
+import javafxapplication1.CPU.EmuStage;
 import javafxapplication1.CPU.GUI_BusAnimator;
 import javafxapplication1.CPU.NumberingSystem;
 import javafxapplication1.CPU.RAM;
@@ -46,9 +50,12 @@ import javafxapplication1.CPU.RamRegister;
  * @author Jorge
  */
 public class FXMLDocumentController implements Initializable {
+    Boolean demo = false;
+    
     private CPU cpu = new CPU();
     private RAM ram = new RAM();
     private GUI_BusAnimator  bs_animator;
+    public static ArrayList<Thread> threads = new ArrayList<>();
     String filePath;
     
     Boolean cpuRegisters_isBinaryOn = true;
@@ -337,6 +344,15 @@ public class FXMLDocumentController implements Initializable {
     private Slider clockSpeed_slider;
     
     
+    @FXML
+    private Button stepRun_btn;
+    
+    @FXML
+    private Button loopRun_btn;
+    
+    @FXML
+    private Button previous_btn;
+    
    
     public void onSlide(){
         DecimalFormat df = new DecimalFormat("#.#");
@@ -350,19 +366,17 @@ public class FXMLDocumentController implements Initializable {
     }
     public void setSlider(){
         this.clockSpeed_slider.setMin(0.5);
-        this.clockSpeed_slider.setMax(4);
+        this.clockSpeed_slider.setMax(5);
         this.clockSpeed_slider.setValue(1);
         this.clockSpeed_slider.setShowTickLabels(true);
         this.clockSpeed_slider.setShowTickMarks(true);
         this.clockSpeed_slider.setMajorTickUnit(0.50);
-        //this.clockSpeed_slider.setMinorTickCount(0.05);
         this.clockSpeed_slider.setBlockIncrement(0.05);
     }
     
     public void setClockSpeed(double mult){
         Double d = CPU.clockSpeed/mult;
         CPU.delay = d.intValue();
-        System.out.println(d.intValue());
     }
     
     
@@ -512,6 +526,8 @@ public class FXMLDocumentController implements Initializable {
             this.cpu.resetAll();
             this.ram.resetHighlight();
         }catch(Exception ex){}
+        
+        this.cpu.setAnimator(this.bs_animator);
     }
     
     @FXML
@@ -664,10 +680,62 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void line(ActionEvent event){
-        this.cpu.setAnimator(this.bs_animator);
+    private void loopRun(ActionEvent event){
+        EmuStage previousStage = this.cpu.swapPauseStage();
+        if(previousStage == EmuStage.PAUSED){
+            Image img = new Image(getClass().getResourceAsStream("pause.png"));
+            ImageView view = new ImageView(img);
+            this.loopRun_btn.setGraphic(view);
+            this.stepRun_btn.setDisable(true);
+            this.cpu.setStepMode(false);
+            Thread th = new Thread(this.cpu);
+            threads.add(th);
+            th.start();   
+        }else{
+            Image img = new Image(getClass().getResourceAsStream("run.png"));
+            ImageView view = new ImageView(img);
+            this.loopRun_btn.setGraphic(view);
+            Thread th = new Thread(() -> {
+                CPU_Stage stg = cpu.getNextStage();
+                CPU_Stage stg0 = cpu.getNextStage();
+                try{
+                    while(stg == stg0){
+                        stg = cpu.getNextStage();
+                        Thread.sleep(CPU.delay/3);
+                    }
+                    stepRun_btn.setDisable(false);
+                }catch(Exception ex){
+                }
+            });
+            th.start();
+        }
+    }
+
+    
+    @FXML
+    private void stepRun(ActionEvent event){
+        this.stepRun_btn.setDisable(true);
+        this.loopRun_btn.setDisable(true);
+        this.cpu.swapPauseStage();
+        this.cpu.resumeEmulation();
+        this.cpu.setStepMode(true);
         Thread th = new Thread(this.cpu);
+        threads.add(th);
         th.start();
+        Thread th2 = new Thread(() -> {
+            CPU_Stage stg = cpu.getNextStage();
+            CPU_Stage stg0 = cpu.getNextStage();
+            try{
+                while(stg == stg0){
+                    stg = cpu.getNextStage();
+                    Thread.sleep(CPU.delay/3);
+                }
+                stepRun_btn.setDisable(false);
+                loopRun_btn.setDisable(false);
+                cpu.swapPauseStage();
+            }catch(Exception ex){}
+        });
+        th2.start();
     }
     
     @FXML
@@ -679,63 +747,125 @@ public class FXMLDocumentController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("LittleEmu - Editor de codigo");
             stage.show();
-        }catch(Exception ex){
-        
+        }catch(Exception ex){       
         }
     }
     
     @FXML
     private void displayFilePicker(){
-        Stage primaryStage = new Stage();
+        Stage pickerStage = new Stage();
         Label titleLbl = new Label("Seleccione un archivo y presione cargar para empezar");
         titleLbl.setFont(new Font("Tahoma", 22));
         Label dirLbl = new Label("No se ha seleccionado un archivo");
-        Button selectFileBtn = new Button();
-        selectFileBtn.setText("Buscar archivo");
-        Button cargarBtn = new Button();
-        cargarBtn.setText("Cargar Archivo");
-        
+        dirLbl.setTextFill(Color.web("#ef0400"));
+        Button selectFileBtn = new Button("Buscar archivo");
+        Button cargarBtn = new Button("Cargar archivo");
+        Button demosBtn = new Button("      Demos     ");
         cargarBtn.setDisable(true);
         
         selectFileBtn.setOnAction((ActionEvent event) -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Buscar un archivo");
-            File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if (selectedFile == null) {
-                System.out.println("No File selected");
-            } else {
+            File selectedFile = fileChooser.showOpenDialog(pickerStage);
+            if(selectedFile != null){
+                demo = false;
                 cargarBtn.setDisable(false);
                 filePath = selectedFile.getAbsolutePath();
                 dirLbl.setText(selectedFile.getAbsolutePath());
             }
         });
         
-        cargarBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(uploadCode()){
+        cargarBtn.setOnAction((ActionEvent event) -> {
+            if(demo){
+                String st = dirLbl.getText();
+                if(st.contains("DEMO1")){//sumar
+                    loadDemo1();
+                }else if(st.contains("DEMO2")){//restar
+                    loadDemo2();
+                }else if(st.contains("DEMO3")){//bucle
+                    loadDemo3();
+                }else if(st.contains("DEMO4")){//dividir
+                    loadDemo4();
+                }else if(st.contains("DEMO5")){//multiplicar
+                    loadDemo5();
+                }
+                startCPU();
+                pickerStage.close();
+            }else{
+                if(loadCode()){
                     startCPU();
-                    primaryStage.close();
+                    pickerStage.close();
                 }else{
                     Alert al = new Alert(AlertType.ERROR);
                     al.setTitle("Error al leer el archivo seleccionado");
                     al.setContentText("El formato del archivo cargado no es compatible");
-                    al.showAndWait();  
+                    al.showAndWait();
                 }
             }
         });
+        
+        demosBtn.setOnAction((ActionEvent event) -> {
+            Stage stg = new Stage();
+            VBox root = new VBox();
+            root.setAlignment(Pos.CENTER);
+            Label demoLbl = new Label("Demos");
+            demoLbl.setFont(new Font("Tahoma",22));
+            Button sumBtn = new Button("Sumar dos números");
+            Button subBtn =  new Button("Restar dos números");
+            Button infLoopBtn = new Button("Bucle infinito");
+            Button divBtn = new Button("Dividir dos números");
+            Button mulBtn = new Button("Multiplicar dos números");
+            
+            sumBtn.setOnMouseClicked((Event event1) -> {
+                dirLbl.setText("DEMO1: Sumar dos números");
+                stg.close();
+                demo = true;
+                cargarBtn.setDisable(false);
+            });
+            subBtn.setOnMouseClicked((Event event1) -> {
+                dirLbl.setText("DEMO2: Restar dos números");
+                stg.close();
+                demo = true;
+                cargarBtn.setDisable(false);
+            });
+            infLoopBtn.setOnMouseClicked((Event event1) -> {
+                dirLbl.setText("DEMO3: Bucle infinito");
+                stg.close();
+                demo = true;
+                cargarBtn.setDisable(false);
+            });
+            divBtn.setOnMouseClicked((Event event1) -> {
+                dirLbl.setText("DEMO4: Dividir dos números");
+                stg.close();
+                demo = true;
+                cargarBtn.setDisable(false);
+            });
+            mulBtn.setOnMouseClicked((Event event1) -> {
+                dirLbl.setText("DEMO5: Multiplicar dos números");
+                stg.close();
+                demo = true;
+                cargarBtn.setDisable(false);
+            });
+            
+            root.getChildren().addAll(demoLbl,sumBtn,subBtn,infLoopBtn,divBtn,mulBtn);
+            root.setSpacing(30);
+            Scene sc =  new Scene(root);
+            stg.setScene(sc);
+            stg.show();
+        });
+        
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setSpacing(20);
-        root.getChildren().addAll(titleLbl, dirLbl, selectFileBtn, cargarBtn);
+        root.getChildren().addAll(titleLbl, dirLbl, selectFileBtn, demosBtn ,cargarBtn);
         Scene scene = new Scene(root, 600, 400);
 
-        primaryStage.setTitle("Cargar programa en RAM");
-        primaryStage.setScene(scene);
-        primaryStage.show(); 
+        pickerStage.setTitle("Cargar programa en RAM");
+        pickerStage.setScene(scene);
+        pickerStage.show(); 
     }
     
-    public boolean uploadCode(){
+    public boolean loadCode(){
         File fl = new File(this.filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(fl))) {
             String line;
@@ -757,7 +887,77 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception ex){
             return false;
         }
-    }  
+    }
+    
+    public void loadDemo1(){
+        this.ram.setByAddress(0, "00101101");
+        this.ram.setByAddress(1, "00011110");
+        this.ram.setByAddress(2, "10000001");
+        this.ram.setByAddress(3, "01001111");
+        this.ram.setByAddress(4, "11110000");
+        this.ram.setByAddress(13, "00011001");
+        this.ram.setByAddress(14, "00001000");
+    }
+    public void loadDemo2(){
+        this.ram.setByAddress(0, "00101101");
+        this.ram.setByAddress(1, "00011110");
+        this.ram.setByAddress(2, "10010001");
+        this.ram.setByAddress(3, "01001111");
+        this.ram.setByAddress(4, "11110000");
+        this.ram.setByAddress(13, "01011010");
+        this.ram.setByAddress(14, "00111011");
+    }
+    public void loadDemo3(){
+        this.ram.setByAddress(0, "00101110");
+        this.ram.setByAddress(1, "00011111");
+        this.ram.setByAddress(2, "10010001");
+        this.ram.setByAddress(3, "01001101");
+        this.ram.setByAddress(4, "10100010");
+        this.ram.setByAddress(5, "00111101");
+        this.ram.setByAddress(6, "00001101");
+        this.ram.setByAddress(7, "10001011");
+        this.ram.setByAddress(8, "11110000");
+        this.ram.setByAddress(14, "00001010");
+        this.ram.setByAddress(15, "00001011");
+    }
+    
+    public void loadDemo4(){
+        this.ram.setByAddress(0, "00111100");
+        this.ram.setByAddress(1, "00001101");
+        this.ram.setByAddress(2, "00101110");
+        this.ram.setByAddress(3, "00011111");
+        this.ram.setByAddress(4, "10010001");
+        this.ram.setByAddress(5, "10111000");
+        this.ram.setByAddress(6, "10001011");
+        this.ram.setByAddress(7, "10100100");
+        this.ram.setByAddress(8, "01101100");
+        this.ram.setByAddress(9, "10000001");
+        this.ram.setByAddress(10, "01001101");
+        this.ram.setByAddress(11, "11110000");
+        this.ram.setByAddress(12, "00000000");
+        this.ram.setByAddress(13, "00000001");
+        this.ram.setByAddress(14, "01100001");
+        this.ram.setByAddress(15, "00001010");
+    }
+    
+    public void loadDemo5 (){
+        this.ram.setByAddress(0, "00111111");
+        this.ram.setByAddress(1, "00001101");
+        this.ram.setByAddress(2, "00101110");
+        this.ram.setByAddress(3, "00011110");
+        this.ram.setByAddress(4, "10000001");
+        this.ram.setByAddress(5, "10011011");
+        this.ram.setByAddress(6, "11001000");
+        this.ram.setByAddress(7, "10100100");
+        this.ram.setByAddress(8, "01001100");
+        this.ram.setByAddress(9, "11110000");
+        this.ram.setByAddress(10, "00000000");
+        this.ram.setByAddress(11, "00000000");
+        this.ram.setByAddress(12, "00000000");
+        this.ram.setByAddress(13, "00000001");
+        this.ram.setByAddress(14, "00000111");
+        this.ram.setByAddress(15, "00001000");
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
