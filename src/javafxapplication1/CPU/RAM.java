@@ -64,5 +64,12 @@ public class RAM {
     }
     
     
+    public void resetAll(){
+        for(RamRegister rr : this.registers){
+            rr.setValue("00000000");
+            rr.update();
+        }
+    }
+    
     
 }

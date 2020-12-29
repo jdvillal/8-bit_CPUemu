@@ -34,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxapplication1.CPU.CPU;
@@ -746,6 +747,10 @@ public class FXMLDocumentController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("LittleEmu - Editor de codigo");
+            stage.setMaxHeight(695);
+            stage.setMaxWidth(478);
+            stage.setMinHeight(695);
+            stage.setMinWidth(478);
             stage.show();
         }catch(Exception ex){       
         }
@@ -851,6 +856,10 @@ public class FXMLDocumentController implements Initializable {
             root.setSpacing(30);
             Scene sc =  new Scene(root);
             stg.setScene(sc);
+            stg.setMaxWidth(220);
+            stg.setMaxHeight(450);
+            stg.setMinWidth(220);
+            stg.setMinHeight(450);
             stg.show();
         });
         
@@ -890,6 +899,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     public void loadDemo1(){
+        this.ram.resetAll();
         this.ram.setByAddress(0, "00101101");
         this.ram.setByAddress(1, "00011110");
         this.ram.setByAddress(2, "10000001");
@@ -899,6 +909,7 @@ public class FXMLDocumentController implements Initializable {
         this.ram.setByAddress(14, "00001000");
     }
     public void loadDemo2(){
+        this.ram.resetAll();
         this.ram.setByAddress(0, "00101101");
         this.ram.setByAddress(1, "00011110");
         this.ram.setByAddress(2, "10010001");
@@ -908,6 +919,7 @@ public class FXMLDocumentController implements Initializable {
         this.ram.setByAddress(14, "00111011");
     }
     public void loadDemo3(){
+        this.ram.resetAll();
         this.ram.setByAddress(0, "00101110");
         this.ram.setByAddress(1, "00011111");
         this.ram.setByAddress(2, "10010001");
@@ -922,6 +934,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     public void loadDemo4(){
+        this.ram.resetAll();
         this.ram.setByAddress(0, "00111100");
         this.ram.setByAddress(1, "00001101");
         this.ram.setByAddress(2, "00101110");
@@ -934,26 +947,23 @@ public class FXMLDocumentController implements Initializable {
         this.ram.setByAddress(9, "10000001");
         this.ram.setByAddress(10, "01001101");
         this.ram.setByAddress(11, "11110000");
-        this.ram.setByAddress(12, "00000000");
         this.ram.setByAddress(13, "00000001");
         this.ram.setByAddress(14, "01100001");
         this.ram.setByAddress(15, "00001010");
     }
     
     public void loadDemo5 (){
-        this.ram.setByAddress(0, "00111111");
-        this.ram.setByAddress(1, "00001101");
-        this.ram.setByAddress(2, "00101110");
-        this.ram.setByAddress(3, "00011110");
-        this.ram.setByAddress(4, "10000001");
-        this.ram.setByAddress(5, "10011011");
-        this.ram.setByAddress(6, "11001000");
-        this.ram.setByAddress(7, "10100100");
-        this.ram.setByAddress(8, "01001100");
-        this.ram.setByAddress(9, "11110000");
-        this.ram.setByAddress(10, "00000000");
-        this.ram.setByAddress(11, "00000000");
-        this.ram.setByAddress(12, "00000000");
+        this.ram.resetAll();
+        this.ram.setByAddress(0, "00101110");//load_A 14
+        this.ram.setByAddress(1, "00011110");//load_B 14
+        this.ram.setByAddress(2, "00111111");//load_C 15
+        this.ram.setByAddress(3, "00001101");//load_D 13
+        this.ram.setByAddress(4, "10011011");//SUB C D
+        this.ram.setByAddress(5, "11001000");//Jump_zro 8
+        this.ram.setByAddress(6, "10000001");//add A B
+        this.ram.setByAddress(7, "10100100");//jump 4
+        this.ram.setByAddress(8, "01001100");//store_A 12
+        this.ram.setByAddress(9, "11110000");//HALT
         this.ram.setByAddress(13, "00000001");
         this.ram.setByAddress(14, "00000111");
         this.ram.setByAddress(15, "00001000");

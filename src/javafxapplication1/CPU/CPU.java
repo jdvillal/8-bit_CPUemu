@@ -505,9 +505,7 @@ public class CPU implements Runnable{
                 }catch(Exception ex){}
             }
             Thread.currentThread().interrupt();
-
         }
-
     }
     
 }
