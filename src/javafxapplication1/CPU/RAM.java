@@ -6,38 +6,38 @@
 package javafxapplication1.CPU;
 
 import java.util.ArrayList;
-import javafx.application.Platform;
 
 /**
  *
  * @author Jorge
  */
 public class RAM {
-    
+
     private ArrayList<RamRegister> registers;
-    
-    public RAM(){
+
+    public RAM() {
         this.registers = new ArrayList<>();
-        for(int i = 0; i < 16; i++){
+        for (int i = 0; i < 16; i++) {
             this.registers.add(new RamRegister(i));
         }
-    }  
-    
-    public NumberingSystem swapRamAddressesBase(){
+    }
+
+    public NumberingSystem swapRamAddressesBase() {
         NumberingSystem toReturn = null;
-        for(int i = 0; i < registers.size(); i ++){
-            toReturn  = registers.get(i).swapAddressBase();
+        for (int i = 0; i < registers.size(); i++) {
+            toReturn = registers.get(i).swapAddressBase();
         }
         return toReturn;
     }
-    
-    public RamRegister getByAddress(int i){
+
+    public RamRegister getByAddress(int i) {
         return this.registers.get(i);
     }
-    
-    public void setByAddress(int i, String st){
+
+    public void setByAddress(int i, String st) {
         this.registers.get(i).setValue(st);
     }
+
     /*
     public void update(){
         Platform.runLater(new Runnable(){
@@ -47,29 +47,28 @@ public class RAM {
             }
         });
     }*/
-    
-    public void update(){
-        for(int i = 0; i < registers.size() ; i ++){
+
+    public void update() {
+        for (int i = 0; i < registers.size(); i++) {
             registers.get(i).update();
         }
     }
-    public void resetHighlight(){
+
+    public void resetHighlight() {
         this.registers.forEach((rr) -> {
             rr.setHighlight(false);
         });
     }
-    
-    public void setHighlight(int address, boolean bool){
+
+    public void setHighlight(int address, boolean bool) {
         this.registers.get(address).setHighlight(bool);
     }
-    
-    
-    public void resetAll(){
-        for(RamRegister rr : this.registers){
+
+    public void resetAll() {
+        for (RamRegister rr : this.registers) {
             rr.setValue("00000000");
             rr.update();
         }
     }
-    
-    
+
 }

@@ -5,14 +5,25 @@
  */
 package javafxapplication1;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -34,7 +45,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxapplication1.CPU.CPU;
@@ -380,18 +390,21 @@ public class FXMLDocumentController implements Initializable {
         CPU.delay = d.intValue();
     }
     
+    public void enableRunButtons(){
+        this.stepRun_btn.setDisable(false);
+        this.loopRun_btn.setDisable(false);
+    }
+    
     
 
     //@FXML
     private void startCPU() {
         this.setSlider();
-        this.clockSpeed_slider.setOnMouseReleased(new EventHandler(){
-            @Override
-            public void handle(Event event) {
-                onSlide();
-            }
+        this.clockSpeed_slider.setOnMouseReleased((Event event) -> {
+            onSlide();
         });
         
+        this.enableRunButtons();
         CpuRegister registerA = new CpuRegister(); registerA.setGUI(regA_lbl, regA_rec);
         cpu.setRegisterA(registerA);
         CpuRegister registerB = new CpuRegister(); registerB.setGUI(regB_lbl, regB_rec);
@@ -705,7 +718,7 @@ public class FXMLDocumentController implements Initializable {
                         Thread.sleep(CPU.delay/3);
                     }
                     stepRun_btn.setDisable(false);
-                }catch(Exception ex){
+                }catch(InterruptedException ex){
                 }
             });
             th.start();
@@ -734,7 +747,7 @@ public class FXMLDocumentController implements Initializable {
                 stepRun_btn.setDisable(false);
                 loopRun_btn.setDisable(false);
                 cpu.swapPauseStage();
-            }catch(Exception ex){}
+            }catch(InterruptedException ex){}
         });
         th2.start();
     }
@@ -755,6 +768,16 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception ex){       
         }
     }
+    
+    @FXML
+    private void showHelp(ActionEvent event){
+        try {
+            java.awt.Desktop.getDesktop().browse(new java.net.URI("https://littleemu-app.blogspot.com/2020/12/littleemu-instruction-set-instruccion.html"));
+        } catch (IOException | URISyntaxException ex) {
+            
+        }         
+    }
+    
     
     @FXML
     private void displayFilePicker(){
