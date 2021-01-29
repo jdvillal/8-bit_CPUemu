@@ -5,28 +5,22 @@
  */
 package javafxapplication1;
 
-import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.RoundingMode;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -261,9 +256,7 @@ public class FXMLDocumentController implements Initializable {
     
     
     @FXML
-    private Button ramAddresses_btn;
-    
-    
+    private Button ramAddresses_btn; 
     
     
     //*********ADDRES AND ENABLE BUSES GUI LINES********
@@ -364,7 +357,23 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button previous_btn;
     
-   
+    @FXML
+    private ComboBox resPicker;
+    
+    @FXML
+    public void openSettings(ActionEvent event){
+        Stage st = new Stage();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("settings.fxml"));
+            Scene sc = new Scene(root);
+            st.setScene(sc);
+            st.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
     public void onSlide(){
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -393,6 +402,18 @@ public class FXMLDocumentController implements Initializable {
     public void enableRunButtons(){
         this.stepRun_btn.setDisable(false);
         this.loopRun_btn.setDisable(false);
+    }
+    
+    public void onAboutPresed(){
+        Stage stage = new Stage();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("About.fxml"));
+            Scene sc = new Scene(root);
+            stage.setScene(sc);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

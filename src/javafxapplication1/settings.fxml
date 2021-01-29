@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.SettingsController">
+   <children>
+      <ChoiceBox fx:id="res_choiceBox" layoutX="204.0" layoutY="61.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="61.0" prefHeight="25.0" prefWidth="150.0" text="Scale/Resolution">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="116.0" prefHeight="25.0" prefWidth="168.0" text="Default clock speed">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="clock_choiceBox" layoutX="204.0" layoutY="116.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="171.0" prefHeight="25.0" prefWidth="168.0" text="Default On-Start Demo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="demo_choiceBox" layoutX="204.0" layoutY="171.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

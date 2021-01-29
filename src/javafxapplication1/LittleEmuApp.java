@@ -5,6 +5,8 @@
  */
 package javafxapplication1;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,14 +18,15 @@ import javafx.stage.Stage;
 import javafxapplication1.CPU.CPU;
 
 /**
- *
  * @author Jorge
  */
-public class LittleEmuApp extends Application {   
+public class LittleEmuApp extends Application {  
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         Scene scene = new Scene(root);
+
         stage.setScene(scene);
         stage.setMaxHeight(1020);
         stage.setMaxWidth(1700);
@@ -37,7 +40,11 @@ public class LittleEmuApp extends Application {
                 CPU.safeInterrupt();
             }
         });
+        
+        //stage.setResizable(false);
+
         stage.show();
+        
     }
     
     /**

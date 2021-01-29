@@ -24,7 +24,6 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
  * @author Jorge
  */
 public class TextEditorController implements Initializable {
@@ -65,7 +64,7 @@ public class TextEditorController implements Initializable {
         try {
             java.awt.Desktop.getDesktop().browse(new java.net.URI("https://littleemu-app.blogspot.com/2020/12/littleemu-instruction-set-instruccion.html"));
         } catch (IOException | URISyntaxException ex) {
-
+            
         }
     }
 
@@ -92,7 +91,6 @@ public class TextEditorController implements Initializable {
                     this.throwErrorAlert("Error de sintaxis en la linea: " + lines[i]);
                     return;
                 }
-                
             }
             String opcode = lineParts[0];
             if (opcode.equals("ADD") || opcode.equals("SUB")) {
@@ -263,18 +261,17 @@ public class TextEditorController implements Initializable {
                     return;
                 }
             }else if(opcode.equals("HALT")){
-                System.out.println(lineParts.length);
                 if(lineParts.length > 1){
                     this.throwErrorAlert("Error de sintaxis en la linea: "+lines[i]+"\nLa instrucción HALT no debe recibir parametros.");
                 }else{
                     code.add("11110000");
                 }
+            }else if(opcode.equals("STR_VAR")){
+                
             }else{
                 this.throwErrorAlert("OPCODE desconocido, la instrucción no es válida.\nLinea: "+ lines[i]);
             }
-        }
-        System.out.println(code);
-        
+        }   
     }
     
     public String getIntBinaryAsString(int i){

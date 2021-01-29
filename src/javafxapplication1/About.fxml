@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" onDragDetected="#showAbout" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.AboutController">
+   <children>
+      <Label layoutX="187.0" layoutY="43.0" prefHeight="53.0" prefWidth="227.0" text="LittleEmu App">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="210.0" layoutY="222.0" prefHeight="53.0" prefWidth="180.0" text="\@Autor: Jorge Villalta">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="279.0" layoutY="249.0" prefHeight="53.0" prefWidth="43.0" text="2021">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="154.0" layoutY="301.0" prefHeight="53.0" prefWidth="92.0" text="More info at: ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="169.0" layoutY="82.0" prefHeight="45.0" prefWidth="280.0" text="The 8 bits CPU simplest emulator in the world">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="67.0" layoutY="171.0" prefHeight="78.0" prefWidth="468.0" text="Designed for people to learn how computers actually work">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="246.0" layoutY="315.0" mnemonicParsing="false" onAction="#showAbout" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: transparent;" text="https://littleemu-app.blogspot.com/" textFill="#0048ff" />
+   </children>
+</AnchorPane>

@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1020.0" prefWidth="1500.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="1020.0" prefWidth="1700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
    <children>
       <ImageView fitHeight="1029.0" fitWidth="1696.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -444,7 +444,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="previous_btn11" layoutX="586.0" layoutY="-13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+      <Button fx:id="previous_btn11" layoutX="586.0" layoutY="-13.0" mnemonicParsing="false" onAction="#onAboutPresed" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView>
                <image>
@@ -453,6 +453,16 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="settings_btn" layoutX="637.0" layoutY="-13.0" mnemonicParsing="false" onAction="#openSettings" prefHeight="25.0" prefWidth="87.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@settings.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      
       
    </children>
 </AnchorPane>
